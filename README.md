@@ -118,7 +118,7 @@ href="https://github.com/statikfintechllc/AscendAI/blob/master/About Us">
 <div align="center">
 
   <a href="https://github.com/statikfintechllc/GremlinGPT.git">
-  <img src="https://raw.githubusercontent.com/KDK-Grim-WorkFlowRepo-Mirror/master/docs/graph/traffic_graph.png" alt="Traffic Graph" />
+  <img src="https://raw.githubusercontent.com/KDK-Grim/WorkFlowRepo-Mirror/master/docs/graph/traffic_graph.png" alt="Traffic Graph" />
   </a>
    <a href="https://github.com/statikfintechllc/WorkFlowRepo.git">
   <img src="https://img.shields.io/badge/Click%20to%20Install-Graph%20Workflow-darkred?labelColor=black" alt="GremlinGPT Alpha"/>
