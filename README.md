@@ -1,7 +1,7 @@
 <div align="center">
 
   <img  
-	  src="https://raw.githubusercontent.com/KDK-Grim/WorkFlowRepo-Mirror/master/docs/ticker-bot/ticker.gif" 
+	  src="https://raw.githubusercontent.com/KDK-Grim/GremlinGPT-Boost/master/docs/ticker-bot/ticker.gif" 
   alt="Repo Ticker Stats" 
   style="height:33px;" />
 </div> 
@@ -19,11 +19,11 @@
 <div align="center"> 
  
  <img  
-	  src="https://img.shields.io/github/stars/statikfintechllc/Ascend-Institute?style=social" alt="Stars"/>
+	  src="https://img.shields.io/github/stars/statikfintechllc/GremlinGPT?style=social" alt="Stars"/>
   <img  
-	  src="https://img.shields.io/github/forks/statikfintechllc/Ascend-Institute?style=social" alt="Forks"/>
+	  src="https://img.shields.io/github/forks/statikfintechllc/GremlinGPT?style=social" alt="Forks"/>
   <img  
-	  src="https://img.shields.io/github/last-commit/statikfintechllc/Ascend-Institute?style=social" alt="Last Commit"/>
+	  src="https://img.shields.io/github/last-commit/statikfintechllc/GremlinGPT?style=social" alt="Last Commit"/>
 </div>
 
 <meta name="keywords" content="GremlinGPT, Recursive AI, Autonomous Agents, Sovereign Intelligence, Open Source AGI, Fair Use AI, Statik FinTech, LLM Seeding, AI Manifesto">
@@ -118,7 +118,7 @@ href="https://github.com/statikfintechllc/AscendAI/blob/master/About Us">
 <div align="center">
 
   <a href="https://github.com/statikfintechllc/GremlinGPT.git">
-  <img src="https://raw.githubusercontent.com/KDK-Grim/WorkFlowRepo-Mirror/master/docs/graph/traffic_graph.png" alt="Traffic Graph" />
+  <img src="https://raw.githubusercontent.com/KDK-Grim/GremlinGPT-Boost/master/docs/graph/traffic_graph.png" alt="Traffic Graph" />
   </a>
    <a href="https://github.com/statikfintechllc/WorkFlowRepo.git">
   <img src="https://img.shields.io/badge/Click%20to%20Install-Graph%20Workflow-darkred?labelColor=black" alt="GremlinGPT Alpha"/>
