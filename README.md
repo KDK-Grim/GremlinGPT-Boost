@@ -1,5 +1,3 @@
-<link rel="stylesheet" type="text/css" href="custom.css">
- 
 <div align="center">
 
   <img  
@@ -106,6 +104,16 @@ href="https://github.com/statikfintechllc/AscendAI/blob/master/About Us">
 *Recursive, Self-Referential Autonomous Cognitive System*
 
 </div> 
+
+> [!NOTE]
+>
+> This Repo is for out-reach
+>
+> GremlinGPT lives in:
+> ```url
+> github.com/statikfintechllc/GremlinGPT
+> ```
+> Follow the badges, Always more to see.
 
 <div align="center">
 
