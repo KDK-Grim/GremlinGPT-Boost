@@ -7,12 +7,14 @@ TOKEN = os.getenv("PAT_GITHUB")
 HEADERS = {"Authorization": f"token {TOKEN}"}
 
 REPOS = [
-    "statikfintechllc/AscendAI",
-    "statikfintechllc/Mobile-Developer",
+    "statikfintechllc/GremlinGPT",
+    "statikfintechllc/Gremlin-ShadTail-Trader",
+    "statikfintechllc/Gremlin-MCP-Scrap",
+    "statikfintechllc/dragon-boot",
+    "statikfintechllc/Mobile-Mirror",
     "statikfintechllc/AscendDocs-of-GovSeverance",
     "statikfintechllc/GodCore",
-    "statikfintechllc/AscendNet",
-    "statikfintechllc/WorkFlowRepo"
+    "statikfintechllc/AscendNet"
 ]
 
 stats = []
