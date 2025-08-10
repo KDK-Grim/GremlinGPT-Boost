@@ -169,10 +169,11 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   </g>
 </svg>`;
 
-// Write & verify
-const outPath = path.join(process.cwd(), "crimson-flow.svg"); // write in repo path regardless of CWD
+// docs/svg/scripts/generate-crimson-flow.mjs
+const outPath = path.join(process.cwd(), "docs", "svg", "crimson-flow.svg");
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, svg, "utf8");
+console.log("Wrote", outPath);
 
 const stat = await fs.stat(outPath);
 console.log(`Wrote ${outPath} (${stat.size} bytes)`);
