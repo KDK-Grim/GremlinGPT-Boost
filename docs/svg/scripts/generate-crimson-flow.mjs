@@ -170,7 +170,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 </svg>`;
 
 // Write & verify
-const outPath = path.join(process.cwd(), "docs/svg/crimson-flow.svg"); // write in repo path regardless of CWD
+const outPath = path.join(process.cwd(), "crimson-flow.svg"); // write in repo path regardless of CWD
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, svg, "utf8");
 
