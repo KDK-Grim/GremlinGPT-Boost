@@ -1,7 +1,7 @@
 name: Build Crimson Flow
 on:
   schedule:
-    - cron: "13 */6 * * *"   # every 6 hours
+    - cron: "13 */6 * * *"
   workflow_dispatch:
   push:
     paths:
@@ -18,20 +18,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm ci --ignore-scripts --no-audit --no-fund
-        continue-on-error: true
-      - run: npm run build:flow
+
+      - name: Build crimson-flow.svg
+        working-directory: docs/svg
         env:
-          GITHUB_TOKEN: ${{ secrets.PULL_STATIK_PAT }}   # provided automatically
           GH_TOKEN: ${{ secrets.PULL_STATIK_PAT }}
+          GITHUB_TOKEN: ${{ secrets.PULL_STATIK_PAT }}
           USER_LOGIN: statikfintechllc
+        run: node scripts/generate-crimson-flow.mjs
+
       - name: Commit updated SVG
         run: |
-          if [ -n "$(git status --porcelain ./docs/scripts/crimson-flow.svg)" ]; then
+          if ! git diff --quiet -- docs/svg/crimson-flow.svg; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add .
             git commit -m "chore: update crimson-flow.svg"
             git pull --rebase
             git push
+          else
+            echo "No changes to commit."
           fi
