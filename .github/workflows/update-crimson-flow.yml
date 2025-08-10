@@ -3,13 +3,6 @@ name: Build Crimson Flow
 on:
   schedule:
     - cron: "13 */6 * * *" # every 6 hours
-  workflow_dispatch:
-  push:
-    paths:
-      - "docs/svg/scripts/generate-crimson-flow.mjs"
-      - "docs/svg/package.json"
-      - "docs/svg/package-lock.json"
-      - ".github/workflows/update-crimson-flow.yml"
 
 jobs:
   build:
@@ -23,7 +16,8 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install dependencies
+      - name: Install deps (docs/svg)
+        working-directory: docs/svg
         run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Build crimson-flow.svg
