@@ -1,11 +1,11 @@
-/* Generate assets/crimson-flow.svg from live GitHub stats.
+/* Generate docs/svg/crimson-flow.svg from live GitHub stats.
  * Requirements: Node 20+ (native fetch). Auth: GH_TOKEN or GITHUB_TOKEN.
  * Owner: statikfintechllc — change USER if you ever want to target another.
  */
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const USER = process.env.USER_LOGIN || "statikfintechllc";
+const USER  = process.env.USER_LOGIN || "statikfintechllc";
 const TOKEN = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
 if (!TOKEN) {
   console.error("Missing GH_TOKEN/GITHUB_TOKEN");
@@ -13,8 +13,12 @@ if (!TOKEN) {
 }
 
 // --- Helpers ---------------------------------------------------------------
-const fmtDate = (d) => d.toISOString().slice(0, 10);
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+
+// GitHub GraphQL DateTime requires ISO-8601 with time (UTC)
+const isoStartUTC = (d) =>
+  new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 0, 0, 0)).toISOString();
+const isoNowUTC = () => new Date().toISOString();
 
 async function gql(query, variables = {}) {
   const r = await fetch("https://api.github.com/graphql", {
@@ -34,70 +38,64 @@ async function gql(query, variables = {}) {
   return j.data;
 }
 
-// Smooth curve from points (cubic bezier through points)
+// Smooth curve from points (Catmull–Rom → cubic Bezier)
 function bezierPath(points) {
   if (points.length < 2) return "";
-  const path = [];
-  path.push(`M${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`);
+  const pathCmds = [];
+  pathCmds.push(`M${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`);
   for (let i = 0; i < points.length - 1; i++) {
     const p0 = points[i === 0 ? i : i - 1];
     const p1 = points[i];
     const p2 = points[i + 1];
     const p3 = points[i + 2] || p2;
 
-    // Catmull–Rom to Bezier conversion
     const smooth = 0.2;
     const c1x = p1.x + (p2.x - p0.x) * smooth;
     const c1y = p1.y + (p2.y - p0.y) * smooth;
     const c2x = p2.x - (p3.x - p1.x) * smooth;
     const c2y = p2.y - (p3.y - p1.y) * smooth;
 
-    path.push(`C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`);
+    pathCmds.push(
+      `C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`
+    );
   }
-  return path.join(" ");
+  return pathCmds.join(" ");
 }
 
 // Compute streaks from array of {date,count}
 function streaks(days) {
   let curr = 0, best = 0;
   for (let i = 0; i < days.length; i++) {
-    if (days[i].count > 0) {
-      curr++;
-      best = Math.max(best, curr);
-    } else curr = 0;
+    if (days[i].count > 0) { curr++; best = Math.max(best, curr); }
+    else curr = 0;
   }
-  // current streak is from the end backwards
   let cs = 0;
   for (let i = days.length - 1; i >= 0 && days[i].count > 0; i--) cs++;
   return { current: cs, longest: best };
 }
 
 // --- Fetch data ------------------------------------------------------------
-const today = new Date();
-const end = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-const start30 = new Date(end); start30.setDate(end.getDate() - 30);
-const start365 = new Date(end); start365.setDate(end.getDate() - 365);
+const now = new Date();
+const start30  = new Date(now);  start30.setUTCDate(now.getUTCDate() - 30);
+const start365 = new Date(now);  start365.setUTCDate(now.getUTCDate() - 365);
 
 const query = `
 query($login:String!, $from30:DateTime!, $to:DateTime!, $from365:DateTime!){
   user(login:$login){
     contributions30: contributionsCollection(from:$from30, to:$to){
-      contributionCalendar{
-        weeks{ contributionDays{ date contributionCount } }
-      }
+      contributionCalendar{ weeks{ contributionDays{ date contributionCount } } }
     }
     contributions365: contributionsCollection(from:$from365, to:$to){
-      contributionCalendar{
-        weeks{ contributionDays{ date contributionCount } }
-      }
+      contributionCalendar{ weeks{ contributionDays{ date contributionCount } } }
     }
   }
 }`;
+
 const data = await gql(query, {
   login: USER,
-  from30: fmtDate(start30),
-  from365: fmtDate(start365),
-  to: fmtDate(end)
+  from30:  isoStartUTC(start30),
+  from365: isoStartUTC(start365),
+  to:      isoNowUTC()
 });
 
 function flattenDays(cc) {
@@ -105,12 +103,11 @@ function flattenDays(cc) {
   for (const w of cc.contributionCalendar.weeks) {
     for (const d of w.contributionDays) days.push({ date: d.date, count: d.contributionCount });
   }
-  // Ensure chronological
   days.sort((a, b) => a.date.localeCompare(b.date));
   return days;
 }
 
-const days30 = flattenDays(data.user.contributions30).slice(-30);
+const days30  = flattenDays(data.user.contributions30).slice(-30);
 const days365 = flattenDays(data.user.contributions365).slice(-365);
 
 // Totals & streaks
@@ -121,25 +118,23 @@ const { current: streakCurrent, longest: streakLongest } = streaks(days365);
 const W = 1200, H = 420;
 const plot = { x: 40, y: 60, w: 1120, h: 260 };
 const maxCount = Math.max(5, ...days30.map(d => d.count));
-const cap = Math.max(15, Math.min(40, maxCount + 5)); // adaptive cap keeps headroom
+const cap = Math.max(15, Math.min(40, maxCount + 5)); // adaptive headroom
 
 // map to coords (left->right, bottom origin)
 const pts = days30.map((d, i) => {
-  const x = plot.x + (plot.w * i) / (days30.length - 1);
+  const x = plot.x + (plot.w * i) / (Math.max(1, days30.length - 1));
   const y = plot.y + plot.h - (plot.h * clamp(d.count, 0, cap)) / cap;
   return { x, y };
 });
 
 const dPath = bezierPath(pts);
-
-// area under curve to baseline
 const areaPath = `${dPath} L ${plot.x + plot.w},${plot.y + plot.h} L ${plot.x},${plot.y + plot.h} Z`;
 
 // --- SVG (animated, darker crimson) ---------------------------------------
-const RED = "#9b0e2a";         // darker crimson
-const RED_LINE = "#c3193d";    // line glow
-const RED_SOFT = "#7a0f26";    // area
-const MUTED = "#94a3b8";
+const RED      = "#9b0e2a";   // darker crimson
+const RED_LINE = "#c3193d";   // line glow
+const RED_SOFT = "#7a0f26";   // area
+const MUTED    = "#94a3b8";
 
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -176,8 +171,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
         font-size="22" fill="${RED}" opacity=".95">Statik DK Smoke’s Crimson Flow</text>
 
   <!-- Area -->
-  <path d="${areaPath}"
-        fill="${RED_SOFT}" opacity=".13">
+  <path d="${areaPath}" fill="${RED_SOFT}" opacity=".13">
     <animate attributeName="opacity" values=".10;.17;.10" dur="6s" repeatCount="indefinite"/>
   </path>
 
@@ -190,9 +184,18 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 
   <!-- Particles -->
   <g fill="#ffd1db">
-    <circle r="4"><animateMotion dur="7s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion><animate attributeName="opacity" values="1;.3;1" dur="2.2s" repeatCount="indefinite"/></circle>
-    <circle r="3" fill="#ffffff"><animateMotion dur="8.2s" begin="1s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion><animate attributeName="opacity" values=".7;.2;.7" dur="2.4s" repeatCount="indefinite"/></circle>
-    <circle r="3" fill="#ffc7d3"><animateMotion dur="6s" begin="2s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion><animate attributeName="opacity" values=".8;.3;.8" dur="2s" repeatCount="indefinite"/></circle>
+    <circle r="4">
+      <animateMotion dur="7s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion>
+      <animate attributeName="opacity" values="1;.3;1" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="3" fill="#ffffff">
+      <animateMotion dur="8.2s" begin="1s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion>
+      <animate attributeName="opacity" values=".7;.2;.7" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="3" fill="#ffc7d3">
+      <animateMotion dur="6s" begin="2s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion>
+      <animate attributeName="opacity" values=".8;.3;.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
   </g>
 
   <!-- Axes labels -->
@@ -201,25 +204,35 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 
   <!-- Stat chips (live numbers) -->
   <g font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial" font-size="15">
-    <g transform="translate(120,360)"><rect x="-12" y="-26" rx="10" ry="10" width="220" height="36" fill="#0a0d12" stroke="${RED}" opacity=".92"/>
+    <g transform="translate(120,360)">
+      <rect x="-12" y="-26" rx="10" ry="10" width="220" height="36" fill="#0a0d12" stroke="${RED}" opacity=".92"/>
       <text x="12" y="-6" fill="${MUTED}">Total Contributions (365d)</text>
       <text x="12" y="12" fill="${RED}" font-weight="700">${total365.toLocaleString()}</text>
-      <circle cx="196" cy="-8" r="14" fill="#0a0d12" stroke="${RED}" stroke-width="3"><animate attributeName="r" values="14;16;14" dur="2.6s" repeatCount="indefinite"/></circle>
+      <circle cx="196" cy="-8" r="14" fill="#0a0d12" stroke="${RED}" stroke-width="3">
+        <animate attributeName="r" values="14;16;14" dur="2.6s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <g transform="translate(490,360)"><rect x="-12" y="-26" rx="10" ry="10" width="170" height="36" fill="#0a0d12" stroke="${RED}" opacity=".92"/>
+    <g transform="translate(490,360)">
+      <rect x="-12" y="-26" rx="10" ry="10" width="170" height="36" fill="#0a0d12" stroke="${RED}" opacity=".92"/>
       <text x="12" y="-6" fill="${MUTED}">Current Streak</text>
       <text x="12" y="12" fill="${RED}" font-weight="700">${streakCurrent}</text>
-      <circle cx="150" cy="-8" r="14" fill="#0a0d12" stroke="${RED}" stroke-width="3"><animate attributeName="r" values="14;16;14" dur="2.6s" begin=".5s" repeatCount="indefinite"/></circle>
+      <circle cx="150" cy="-8" r="14" fill="#0a0d12" stroke="${RED}" stroke-width="3">
+        <animate attributeName="r" values="14;16;14" dur="2.6s" begin=".5s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <g transform="translate(800,360)"><rect x="-12" y="-26" rx="10" ry="10" width="170" height="36" fill="#0a0d12" stroke="${RED}" opacity=".92"/>
+    <g transform="translate(800,360)">
+      <rect x="-12" y="-26" rx="10" ry="10" width="170" height="36" fill="#0a0d12" stroke="${RED}" opacity=".92"/>
       <text x="12" y="-6" fill="${MUTED}">Longest Streak</text>
       <text x="12" y="12" fill="${RED}" font-weight="700">${streakLongest}</text>
-      <circle cx="150" cy="-8" r="14" fill="#0a0d12" stroke="${RED}" stroke-width="3"><animate attributeName="r" values="14;16;14" dur="2.6s" begin="1s" repeatCount="indefinite"/></circle>
+      <circle cx="150" cy="-8" r="14" fill="#0a0d12" stroke="${RED}" stroke-width="3">
+        <animate attributeName="r" values="14;16;14" dur="2.6s" begin="1s" repeatCount="indefinite"/>
+      </circle>
     </g>
   </g>
 </svg>`;
 
-const outPath = path.join(process.cwd(), "./docs/svg/crimson-flow.svg");
+// Write to docs/svg/crimson-flow.svg (working-directory is docs/svg)
+const outPath = path.join(process.cwd(), "crimson-flow.svg");
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, svg, "utf8");
 console.log("Wrote", outPath);
