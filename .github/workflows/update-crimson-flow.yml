@@ -17,9 +17,11 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install deps (docs/svg)
-        working-directory: docs/svg
-        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install dependencies
+        run: |
+          pip install requests
+          cd docs/svg
+          if [ -f package.json ]; then npm ci; fi
 
       - name: Build crimson-flow.svg
         env:
