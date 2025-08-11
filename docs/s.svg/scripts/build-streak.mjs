@@ -3,17 +3,17 @@ import path from "node:path";
 
 const OUT = path.resolve(process.cwd(), "assets/streak.svg");
 const GH_TOKEN = process.env.PAT_GITHUB;
-const USER = process.env.GH_USER || “statikfintechllc”;
-if (!GH_TOKEN) throw new Error(“PAT_GITHUB env missing”);
+const USER = process.env.GH_USER || "statikfintechll";
+if (!GH_TOKEN) throw new Error("PAT_GITHUB env missing");
 
 // –––––––– GraphQL ––––––––
 const gql = async (query, variables = {}, attempt = 1) => {
-const r = await fetch(“https://api.github.com/graphql”, {
+const r = await fetch("https://api.github.com/graphql", {
 method: “POST”,
 headers: {
 Authorization: `bearer ${GH_TOKEN}`,
-“Content-Type”: “application/json”,
-“User-Agent”: “ggpt-boost-streak”
+“Content-Type”: "application/json",
+“User-Agent”: "ggpt-boost-streak"
 },
 body: JSON.stringify({ query, variables })
 });
