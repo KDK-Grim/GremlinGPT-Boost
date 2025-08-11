@@ -208,7 +208,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 </svg>`;
 
 // write
-const outPath = path.join(process.cwd(), "docs", "svg", "assets", "crimson-flow.svg");
+const outPath = path.join(process.cwd(), "docs", "c.svg", "assets", "crimson-flow.svg");
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, svg, "utf8");
 const stat = await fs.stat(outPath);
