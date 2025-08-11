@@ -1,7 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const OUT = path.resolve(process.cwd(), "assets/streak.svg”);
+const OUT = path.resolve(process.cwd(), "assets/streak.svg");
+
 const OUT = path.resolve(process.cwd(), "assets/streak.svg");
 
 const GH_TOKEN = process.env.PAT_GITHUB;
