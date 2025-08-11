@@ -1,124 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="640" height="120" viewBox="0 0 640 120"
-  xmlns="http://www.w3.org/2000/svg">
+<svg width="760" height="140" viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg">
   <style>
     :root{ color-scheme: dark; }
-    .cardTitle{ font: 700 16px system-ui; fill:#e5e7eb }
-    .cardValue{ font: 800 22px system-ui; fill:#60a5fa }
-    .grade{ font: 700 16px system-ui; fill:#e11d48 }
-    .cardDesc{ font: 12px system-ui; fill:#9ca3af }
+    .cardTitle{ font:700 16px system-ui; fill:#e5e7eb }
+    .cardValue{ font:800 22px system-ui; fill:#60a5fa }
+    .grade{ font:700 16px system-ui; fill:#e11d48 }
+    .cardDesc{ font:12px system-ui; fill:#9ca3af }
   </style>
   <defs>
-    <filter id="pulse0"><feGaussianBlur stdDeviation="0"/></filter>
-    <filter id="pulse1"><feGaussianBlur stdDeviation="2"/></filter>
+    <filter id="p0"><feGaussianBlur stdDeviation="0"/></filter>
+    <filter id="p1"><feGaussianBlur stdDeviation="2"/></filter>
   </defs>
 
   
-  <g id="page0" transform="translate(640,0)">
+  <g transform="translate(760,0)">
     
-  <g id="page0-a" transform="translate(20,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Commits</text>
-    <text x="20" y="60" class="cardValue">3,553 <tspan class="grade">[A]</tspan></text>
-    <text x="20" y="90" class="cardDesc">Number of commit contributions across all repos.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(60,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Commits</text>
+    <text x="20" y="70" class="cardValue">3,553 <tspan class="grade">[A]</tspan></text>
+    <text x="20" y="96" class="cardDesc">Commit contributions across all repos.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
-  <g id="page0-b" transform="translate(340,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Followers</text>
-    <text x="20" y="60" class="cardValue">77 <tspan class="grade">[B]</tspan></text>
-    <text x="20" y="90" class="cardDesc">People who follow this account.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(400,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Followers</text>
+    <text x="20" y="70" class="cardValue">77 <tspan class="grade">[B]</tspan></text>
+    <text x="20" y="96" class="cardDesc">People following this account.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
     <animateTransform attributeName="transform" type="translate"
-      values="640;0;-640"
-      keyTimes="0;0.15;1"
-      dur="3s" begin="0.00s"
-      fill="freeze"/>
+      values="760;0;-760" keyTimes="0;0.12;1" dur="3s" begin="0.00s" fill="freeze"/>
   </g>
-  <g id="page1" transform="translate(640,0)">
+  <g transform="translate(760,0)">
     
-  <g id="page1-a" transform="translate(20,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Stars</text>
-    <text x="20" y="60" class="cardValue">24 <tspan class="grade">[B]</tspan></text>
-    <text x="20" y="90" class="cardDesc">Repositories starred by this account.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(60,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Stars Earned</text>
+    <text x="20" y="70" class="cardValue">29 <tspan class="grade">[B]</tspan></text>
+    <text x="20" y="96" class="cardDesc">Stargazers on your owned repositories.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
-  <g id="page1-b" transform="translate(340,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Reviews</text>
-    <text x="20" y="60" class="cardValue">8 <tspan class="grade">[B]</tspan></text>
-    <text x="20" y="90" class="cardDesc">Pull request review contributions.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(400,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Reviews</text>
+    <text x="20" y="70" class="cardValue">8 <tspan class="grade">[B]</tspan></text>
+    <text x="20" y="96" class="cardDesc">Pull request reviews submitted.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
     <animateTransform attributeName="transform" type="translate"
-      values="640;0;-640"
-      keyTimes="0;0.15;1"
-      dur="3s" begin="3.00s"
-      fill="freeze"/>
+      values="760;0;-760" keyTimes="0;0.12;1" dur="3s" begin="3.00s" fill="freeze"/>
   </g>
-  <g id="page2" transform="translate(640,0)">
+  <g transform="translate(760,0)">
     
-  <g id="page2-a" transform="translate(20,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Issues</text>
-    <text x="20" y="60" class="cardValue">10 <tspan class="grade">[B]</tspan></text>
-    <text x="20" y="90" class="cardDesc">Issues created across repositories.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(60,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Issues</text>
+    <text x="20" y="70" class="cardValue">10 <tspan class="grade">[B]</tspan></text>
+    <text x="20" y="96" class="cardDesc">Issues created.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
-  <g id="page2-b" transform="translate(340,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Repositories</text>
-    <text x="20" y="60" class="cardValue">12 <tspan class="grade">[B]</tspan></text>
-    <text x="20" y="90" class="cardDesc">Non-fork repositories owned.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(400,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Repositories</text>
+    <text x="20" y="70" class="cardValue">12 <tspan class="grade">[B]</tspan></text>
+    <text x="20" y="96" class="cardDesc">Owned non-fork repositories.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
     <animateTransform attributeName="transform" type="translate"
-      values="640;0;-640"
-      keyTimes="0;0.15;1"
-      dur="3s" begin="6.00s"
-      fill="freeze"/>
+      values="760;0;-760" keyTimes="0;0.12;1" dur="3s" begin="6.00s" fill="freeze"/>
   </g>
-  <g id="page3" transform="translate(640,0)">
+  <g transform="translate(760,0)">
     
-  <g id="page3-a" transform="translate(20,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Pull Requests</text>
-    <text x="20" y="60" class="cardValue">5 <tspan class="grade">[B]</tspan></text>
-    <text x="20" y="90" class="cardDesc">Pull requests opened.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(60,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Pull Requests</text>
+    <text x="20" y="70" class="cardValue">5 <tspan class="grade">[B]</tspan></text>
+    <text x="20" y="96" class="cardDesc">Pull requests opened.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
-  <g id="page3-b" transform="translate(340,0)">
-    <rect x="0" y="0" rx="14" ry="14" width="280" height="120" fill="#0b1220" stroke="#1f2937" />
-    <text x="20" y="30" class="cardTitle">Experience</text>
-    <text x="20" y="60" class="cardValue">0 <tspan class="grade">[A]</tspan></text>
-    <text x="20" y="90" class="cardDesc">Years since GitHub account creation.</text>
-    <animate attributeName="filter" dur="1.6s" repeatCount="indefinite"
-      values="url(#pulse0);url(#pulse1);url(#pulse0)"/>
+  <g transform="translate(400,10)" opacity="0.0">
+    <rect x="0" y="0" rx="14" ry="14" width="300" height="120" fill="#0b1220" stroke="#1f2937"/>
+    <text x="20" y="34" class="cardTitle">Total Activity</text>
+    <text x="20" y="70" class="cardValue">3,596 <tspan class="grade">[A]</tspan></text>
+    <text x="20" y="96" class="cardDesc">All recorded contributions.</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="3s" repeatCount="1" fill="freeze"/>
+    <animate attributeName="filter" values="url(#p0);url(#p1);url(#p0)" dur="1.6s" repeatCount="indefinite"/>
   </g>
 
     <animateTransform attributeName="transform" type="translate"
-      values="640;0;-640"
-      keyTimes="0;0.15;1"
-      dur="3s" begin="9.00s"
-      fill="freeze"/>
+      values="760;0;-760" keyTimes="0;0.12;1" dur="3s" begin="9.00s" fill="freeze"/>
   </g>
 
   <!-- loop -->
-  <set attributeName="visibility" to="visible" begin="12.00s" dur="0.1s" />
+  <set attributeName="visibility" to="visible" begin="12.00s" dur="0.01s"/>
 </svg>
