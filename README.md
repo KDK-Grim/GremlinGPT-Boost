@@ -109,7 +109,7 @@ href="https://github.com/statikfintechllc/AscendAI/blob/master/About Us">
 >
 > This Repo is for out-reach
 >
-> GremlinGPT lives in:
+> [GremlinGPT](github.com/statikfintechllc/GremlinGPT) lives in:
 > ```url
 > github.com/statikfintechllc/GremlinGPT
 > ```
