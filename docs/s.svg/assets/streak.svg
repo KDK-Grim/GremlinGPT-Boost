@@ -722,7 +722,7 @@
       repeatCount="indefinite"/>
   </g>
   <g>
-    <text x="56" y="90" class="leftLabel">3,596</text>
+    <text x="56" y="90" class="leftLabel">3,597</text>
     <text x="56" y="112" class="leftSub">2025-08-11</text>
     <animate attributeName="opacity"
       values="0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1"
