@@ -2,7 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const OUT = path.resolve(process.cwd(), "assets/streak.svg”);
-const GH_TOKEN = process.env.PAT_GITHUB;
+
+                         const GH_TOKEN = process.env.PAT_GITHUB;
 const USER = process.env.GH_USER || “statikfintechllc”;
 if (!GH_TOKEN) throw new Error(“PAT_GITHUB env missing”);
 
