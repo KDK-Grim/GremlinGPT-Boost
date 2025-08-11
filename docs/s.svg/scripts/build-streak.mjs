@@ -1,11 +1,13 @@
 /**
- * Build animated Streak SVG
- * - Ring-of-fire animation in center (SMIL)
- * - Left: animated counter from first commit date -> today (dates + totals)
- * - Right: cycles through top longest streaks (plural)
+ * Animated Streak (SMIL, no JS at runtime)
+ * - Lifetime contributions count-up (left)
+ * - Ring-of-fire + current streak (center)
+ * - Top longest streaks cycle (right)
  *
- * Requires: env PAT_GITHUB, USER=statikfintechllc (override via env)
- * Output: docs/s.svg/streak.svg
+ * FIXES:
+ *  • Lifetime window via multi-year paging (from createdAt .. now)
+ *  • Uses {from, to: now} so current-day is included
+ *  • No overlap: each frame toggles opacity on/off
  */
 
 import fs from "node:fs/promises";
@@ -15,9 +17,9 @@ const OUT = path.resolve(process.cwd(), "assets/streak.svg");
 const GH_TOKEN = process.env.PAT_GITHUB;
 const USER = process.env.GH_USER || "statikfintechllc";
 
-// ----------- helpers -----------
-const GQL = async (query, variables = {}, attempt = 1) => {
-  if (!GH_TOKEN) throw new Error("PAT_GITHUB env missing");
+if (!GH_TOKEN) throw new Error("PAT_GITHUB env missing");
+
+const gql = async (query, variables = {}, attempt = 1) => {
   const r = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -27,159 +29,136 @@ const GQL = async (query, variables = {}, attempt = 1) => {
     },
     body: JSON.stringify({ query, variables })
   });
-  if (r.status === 502 || r.status === 503 || r.status === 504) {
-    if (attempt < 5) {
-      await new Promise(res => setTimeout(res, attempt * 1000));
-      return GQL(query, variables, attempt + 1);
-    }
+  if (r.status >= 500 && attempt < 5) {
+    await new Promise(res => setTimeout(res, attempt * 400));
+    return gql(query, variables, attempt + 1);
   }
-  if (!r.ok) {
-    const t = await r.text();
-    throw new Error(`GraphQL ${r.status}: ${t}`);
-  }
-  const data = await r.json();
-  if (data.errors) throw new Error(JSON.stringify(data.errors, null, 2));
-  return data.data;
+  if (!r.ok) throw new Error(`GraphQL ${r.status}: ${await r.text()}`);
+  const j = await r.json();
+  if (j.errors) throw new Error(JSON.stringify(j.errors));
+  return j.data;
 };
 
-// ----------- query -----------
-const q = `
-query Streak($login:String!, $from:DateTime!) {
+const qUser = `query($login:String!){ user(login:$login){ createdAt } }`;
+const qCal = `
+query($login:String!, $from:DateTime!, $to:DateTime!){
   user(login:$login){
-    createdAt
-    contributionsCollection(from:$from){
+    contributionsCollection(from:$from, to:$to){
       contributionCalendar{
-        totalContributions
-        weeks{
-          contributionDays{
-            date
-            contributionCount
-          }
-        }
+        weeks{ contributionDays{ date contributionCount } }
       }
-      totalCommitContributions
-      totalIssueContributions
-      totalPullRequestContributions
-      totalPullRequestReviewContributions
-      totalRepositoryContributions
     }
   }
 }
 `;
 
-// find account creation for window start
-const whoQ = `
-query Who($login:String!){
-  user(login:$login){ createdAt }
-}
-`;
-
-// get account start
-const who = await GQL(whoQ, { login: USER });
+// --------- collect ALL daily contributions (lifetime) ----------
+const who = await gql(qUser, { login: USER });
 const createdAt = new Date(who.user.createdAt);
-const fromISO = createdAt.toISOString();
+const now = new Date();
 
-// pull full calendar (GitHub returns a full year window from "from")
-const data = await GQL(q, { login: USER, from: fromISO });
-const cc = data.user.contributionsCollection;
-const days = cc.contributionCalendar.weeks.flatMap(w => w.contributionDays);
+const addDays = (d, n) => {
+  const t = new Date(d);
+  t.setUTCDate(t.getUTCDate() + n);
+  return t;
+};
 
-// collapse to timeline of {date, total}
-let running = 0;
-const timeline = days
-  .sort((a, b) => new Date(a.date) - new Date(b.date))
-  .map(d => {
-    running += d.contributionCount;
-    return { date: d.date, total: running };
-  });
+let cursor = new Date(Date.UTC(createdAt.getUTCFullYear(), createdAt.getUTCMonth(), createdAt.getUTCDate()));
+const allDays = [];
 
-// streak calc (daily contributions > 0)
+while (cursor < now) {
+  const to = addDays(cursor, 365);
+  const winFrom = cursor.toISOString();
+  const winTo = (to < now ? to : now).toISOString();
+
+  const data = await gql(qCal, { login: USER, from: winFrom, to: winTo });
+  const days = data.user.contributionsCollection.contributionCalendar.weeks
+    .flatMap(w => w.contributionDays)
+    .map(d => ({ date: d.date, count: d.contributionCount }));
+  allDays.push(...days);
+  cursor = to;
+}
+
+// sort unique by date
+const byDate = new Map();
+for (const d of allDays) byDate.set(d.date, (byDate.get(d.date) || 0) + d.count);
+const days = [...byDate.entries()]
+  .map(([date, count]) => ({ date, count }))
+  .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+// timeline cumulative
+let run = 0;
+const timeline = days.map(d => ({ date: d.date, total: (run += d.count) }));
+
+// current streak (ending today)
+let cs = 0;
+for (let i = days.length - 1; i >= 0; i--) {
+  if (new Date(days[i].date) > now) continue;
+  if (days[i].count > 0) cs++;
+  else break;
+}
+
+// longest streaks (top 3)
 const streaks = [];
-let curStart = null;
-let curLen = 0;
-
+let cur = 0, start = null;
 for (const d of days) {
-  if (d.contributionCount > 0) {
-    if (!curStart) curStart = d.date;
-    curLen++;
-  } else {
-    if (curLen > 0) {
-      streaks.push({ start: curStart, end: prevDate(d.date), len: curLen });
-    }
-    curStart = null;
-    curLen = 0;
+  if (d.count > 0) {
+    if (cur === 0) start = d.date;
+    cur++;
+  } else if (cur > 0) {
+    streaks.push({ start, end: days[days.indexOf(d) - 1].date, len: cur });
+    cur = 0; start = null;
   }
 }
-if (curLen > 0) streaks.push({ start: curStart, end: days.at(-1).date, len: curLen });
+if (cur > 0) streaks.push({ start, end: days.at(-1).date, len: cur });
+const top = [...streaks].sort((a,b)=>b.len-a.len).slice(0,3);
 
-function prevDate(iso) {
-  const t = new Date(iso);
-  t.setUTCDate(t.getUTCDate() - 1);
-  return t.toISOString().slice(0, 10);
-}
-
-// current streak = if last day had >0, else 0
-const lastDay = days.at(-1);
-let currentStreak = 0;
-if (lastDay && lastDay.contributionCount > 0) {
-  currentStreak = streaks.at(-1)?.len ?? 0;
-}
-
-// longest streaks (top 3 by len, stable)
-const top = [...streaks].sort((a, b) => b.len - a.len).slice(0, 3);
-
-// timeline sampling for SMIL (avoid thousands of text nodes)
-// cap to MAX_STEPS frames uniformly
-const MAX_STEPS = 60;
-const sampled = (() => {
-  if (timeline.length <= MAX_STEPS) return timeline;
-  const step = (timeline.length - 1) / (MAX_STEPS - 1);
-  const arr = [];
-  for (let i = 0; i < MAX_STEPS; i++) {
-    const idx = Math.round(i * step);
-    arr.push(timeline[idx]);
-  }
-  return arr;
+// sample to limit frame count
+const MAX_FRAMES = 80;
+const sample = (() => {
+  if (timeline.length <= MAX_FRAMES) return timeline;
+  const step = (timeline.length - 1) / (MAX_FRAMES - 1);
+  return Array.from({length: MAX_FRAMES}, (_, i) => timeline[Math.round(i*step)]);
 })();
 
-// build text frames (dates + totals)
-const leftFrames = sampled.map((p, i) => {
-  const begin = (i * 0.07).toFixed(2); // 70ms steps
-  const dur = "0.07s";
-  const show = `
-    <text x="80" y="80" class="leftLabel">${p.total.toLocaleString()}</text>
-    <text x="80" y="102" class="leftSub">${p.date}</text>
-    <set xlink:href="#lf${i}" attributeName="visibility" to="visible" begin="${begin}s" dur="${dur}" fill="freeze"/>
-  `;
-  return `<g id="lf${i}" visibility="${i === 0 ? "visible" : "hidden"}">${show}</g>`;
-}).join("\n");
-
-// right side: rotate through top streaks
-const rightFrames = top.map((s, i) => {
-  const begin = (i * 2.2).toFixed(2);
+// frame groups with explicit on/off
+const frameDur = 0.08; // 80ms
+const mkLeft = sample.map((p,i)=>{
+  const begin = (i*frameDur).toFixed(2);
+  const end   = ((i+1)*frameDur).toFixed(2);
   return `
-  <g id="rt${i}" visibility="${i === 0 ? "visible" : "hidden"}">
-    <text x="520" y="80" class="rightLabel">${s.len} days</text>
-    <text x="520" y="102" class="rightSub">${s.start} → ${s.end}</text>
-    <set attributeName="visibility" to="visible" begin="${begin}s" dur="2s" fill="freeze"/>
+  <g opacity="0">
+    <text x="56" y="90" class="leftLabel">${p.total.toLocaleString()}</text>
+    <text x="56" y="112" class="leftSub">${p.date}</text>
+    <set attributeName="opacity" to="1" begin="${begin}s" dur="0.001s" fill="freeze"/>
+    <set attributeName="opacity" to="0" begin="${end}s" dur="0.001s" fill="freeze"/>
   </g>`;
-}).join("\n");
+}).join("");
 
-// ring-of-fire (center)
+const mkRight = top.map((s,i)=>{
+  const begin = (i*2.4).toFixed(2);
+  const end   = ((i+1)*2.4).toFixed(2);
+  return `
+  <g opacity="0">
+    <text x="470" y="90" class="rightLabel">${s.len} days</text>
+    <text x="470" y="112" class="rightSub">${s.start} → ${s.end}</text>
+    <set attributeName="opacity" to="1" begin="${begin}s" dur="0.001s" fill="freeze"/>
+    <set attributeName="opacity" to="0" begin="${end}s" dur="0.001s" fill="freeze"/>
+  </g>`;
+}).join("");
+
+// ring-of-fire
 const ring = `
-<g transform="translate(300,85)">
+<g transform="translate(320,95)">
   <defs>
     <radialGradient id="fireGrad" r="80%">
-      <stop offset="0%" stop-color="#fffb" />
-      <stop offset="60%" stop-color="#e11d48" />
-      <stop offset="100%" stop-color="#0000" />
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#e11d48" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
     </radialGradient>
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur stdDeviation="3.5" result="b"/>
-      <feMerge>
-        <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <linearGradient id="strokeGrad" x1="0%" x2="100%">
       <stop offset="0%" stop-color="#ffae00"/>
@@ -187,55 +166,43 @@ const ring = `
       <stop offset="100%" stop-color="#ffd500"/>
     </linearGradient>
   </defs>
-
-  <!-- base circle -->
-  <circle r="38" fill="none" stroke="#1f2937" stroke-width="10"/>
-
-  <!-- animated fire arc -->
+  <circle r="42" fill="none" stroke="#1f2937" stroke-width="12"/>
   <g filter="url(#glow)">
-    <circle r="38" fill="none" stroke="url(#strokeGrad)" stroke-linecap="round" stroke-width="10" stroke-dasharray="40 240">
+    <circle r="42" fill="none" stroke="url(#strokeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="50 260">
       <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/>
-      <animate attributeName="stroke-dasharray" values="40 240;80 200;120 160;80 200;40 240" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-dasharray" values="50 260;95 215;140 170;95 215;50 260" dur="1.8s" repeatCount="indefinite"/>
     </circle>
-    <circle r="44" fill="url(#fireGrad)" opacity="0.4">
+    <circle r="52" fill="url(#fireGrad)">
       <animate attributeName="opacity" values="0.25;0.45;0.25" dur="1.2s" repeatCount="indefinite"/>
     </circle>
   </g>
+  <text class="centerNum" text-anchor="middle" dy="8">${cs}</text>
+</g>`;
 
-  <!-- current streak number -->
-  <text text-anchor="middle" dy="6" class="centerNum">${currentStreak}</text>
-</g>
-`;
-
-// SVG shell
+// SVG
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="640" height="140" viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="760" height="150" viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg">
   <style>
     :root{ color-scheme: dark; }
-    .title{ font: 700 16px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Noto Sans', 'Helvetica Neue', Arial, 'Apple Color Emoji','Segoe UI Emoji'; fill:#e5e7eb }
-    .leftLabel{ font: 700 20px system-ui; fill:#60a5fa }
-    .leftSub{ font: 12px system-ui; fill:#9ca3af }
-    .centerNum{ font: 800 24px system-ui; fill:#e11d48 }
-    .rightLabel{ font: 700 20px system-ui; fill:#60a5fa }
-    .rightSub{ font: 12px system-ui; fill:#9ca3af }
+    .title{ font: 700 18px system-ui; fill:#e5e7eb }
+    .leftLabel,.rightLabel{ font: 800 22px system-ui; fill:#60a5fa }
+    .leftSub,.rightSub{ font: 12px system-ui; fill:#9ca3af }
+    .centerNum{ font: 900 28px system-ui; fill:#e11d48 }
   </style>
 
-  <!-- left block -->
-  <text x="24" y="32" class="title">Total Contributions</text>
-  ${leftFrames}
+  <text x="40"  y="36" class="title">Total Contributions</text>
+  ${mkLeft}
 
-  <!-- center ring -->
-  <text x="268" y="32" class="title">Current Streak</text>
+  <text x="298" y="36" class="title">Current Streak</text>
   ${ring}
 
-  <!-- right block -->
-  <text x="520" y="32" class="title">Longest Streaks</text>
-  ${rightFrames}
+  <text x="470" y="36" class="title">Longest Streaks</text>
+  ${mkRight}
 
-  <!-- loop the right side cycle -->
-  <set xlink:href="#rt0" attributeName="visibility" to="visible" begin="${(top.length)*2.2}s" dur="2s" fill="freeze"/>
+  <!-- loop right cycle -->
+  <set attributeName="visibility" to="visible" begin="${(top.length*2.4).toFixed(2)}s" dur="0.01s" />
 </svg>`;
 
 await fs.mkdir(path.dirname(OUT), { recursive: true });
 await fs.writeFile(OUT, svg, "utf8");
-console.log(`wrote ${OUT}`);
+console.log("wrote", OUT);
