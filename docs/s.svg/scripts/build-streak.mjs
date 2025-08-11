@@ -4,7 +4,7 @@
 // - Edge flames instead of golden bubbles
 // - Longest streaks carousel (right)
 
-import fs from "node:js/promises”;
+import fs from "node:fs/promises”;
 import path from “node:path”;
 
 const OUT = path.resolve(process.cwd(), “assets/streak.svg”);
