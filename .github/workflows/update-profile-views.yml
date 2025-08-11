@@ -24,7 +24,7 @@ jobs:
           if [ -f package.json ]; then npm ci; fi
 
       
-      - run: node scripts/build-pv.mjs
+      - run: cd docs/v.svg && node scripts/build-pv.mjs
         env:
           GH_TOKEN: ${{ secrets.PULL_STATIK_PAT }}
           
