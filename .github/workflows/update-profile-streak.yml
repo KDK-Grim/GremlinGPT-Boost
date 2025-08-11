@@ -31,9 +31,9 @@ jobs:
 
       - name: Commit if changed
         run: |
-            git config --global user.name "gremlin-bot"
-            git config --global user.email "actions@github.com"
-            git add docs/s.svg/
-            git commit -m "chore(streak): refresh animated streak badge"
-            git pull --rebase
-            git push
+          git config --global user.name "gremlin-bot"
+          git config --global user.email "actions@github.com"
+          git add docs/s.svg/
+          git commit -m "chore(streak): refresh animated streak badge"
+          git pull --rebase
+          git push
