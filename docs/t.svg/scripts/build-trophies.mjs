@@ -9,7 +9,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const OUT = path.resolve(process.cwd(), "docs/t.svg/assets/trophies.svg");
+const OUT = path.resolve(process.cwd(), "assets/trophies.svg");
 const GH_TOKEN = process.env.PAT_GITHUB;
 const USER = process.env.GH_USER || "statikfintechllc";
 
