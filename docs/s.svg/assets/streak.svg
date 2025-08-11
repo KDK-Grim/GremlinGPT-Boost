@@ -18,6 +18,551 @@
     </filter>
   </defs>
 
+  
+  <g filter="url(#fGlow)" clip-path="url(#clip-left)">
+    <defs>
+      <clipPath id="clip-left">
+        <rect x="0" y="0" width="70" height="170" />
+      </clipPath>
+      
+  <!-- color ramps -->
+  <linearGradient id="gFlame" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%"  stop-color="#ff5a00"/>
+    <stop offset="55%" stop-color="#ffb300"/>
+    <stop offset="100%" stop-color="#fff4b0"/>
+  </linearGradient>
+
+  <!-- two slightly different flame shapes for variety -->
+  <symbol id="flameA" viewBox="-8 -26 16 26" overflow="visible">
+    <path d="M0,0 C-6,-6 -9,-16 -4,-23 C-2,-27 2,-27 4,-23 C9,-16 6,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M1,-6 C-3,-10 -4,-15 -2,-19 C-1,-21 1,-21 2,-19 C4,-15 3,-10 1,-6 Z" fill="#ffd56a" opacity=".55"/>
+  </symbol>
+  <symbol id="flameB" viewBox="-9 -28 18 28" overflow="visible">
+    <path d="M0,0 C-5,-6 -7,-14 -3,-22 C-1,-26 1,-26 3,-22 C7,-14 5,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M0.8,-7 C-2.6,-11 -3.5,-15 -1.8,-19 C-1.1,-21 0.8,-21 1.7,-19 C3.8,-15 2.8,-11 0.8,-7 Z" fill="#ffd56a" opacity=".45"/>
+  </symbol>
+
+  <!-- displacement to make fire wobble -->
+  <filter id="fWobble" x="-100%" y="-100%" width="300%" height="300%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="n">
+      <animate attributeName="baseFrequency" values="0.7;1.15;0.7" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="seed" values="11;13;17;11" dur="2.6s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="7">
+      <animate attributeName="scale" values="4;12;6;10;4" dur="1.4s" repeatCount="indefinite"/>
+    </feDisplacementMap>
+  </filter>
+
+  <!-- warm glow -->
+  <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="5" result="b1"/>
+    <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b2"/>
+    <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+
+  <!-- subtle hot core for ring center -->
+  <radialGradient id="gCore" r="78%">
+    <stop offset="0%"  stop-color="#ffffff" stop-opacity=".52"/>
+    <stop offset="60%" stop-color="#e11d48" stop-opacity=".38"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+  </radialGradient>
+
+    </defs>
+    
+    <g transform="translate(0.64,210) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="2.10s" begin="0.00s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="0.00s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="0.64,210; 0.64,-60" dur="3.50s" begin="0.00s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(13.57,218) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="2.37s" begin="0.18s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="0.18s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="13.57,218; 13.57,-60" dur="3.95s" begin="0.18s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(23.57,226) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="2.64s" begin="0.36s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="0.36s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="23.57,226; 23.57,-60" dur="4.40s" begin="0.36s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(40.11,234) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.91s" begin="0.54s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="0.54s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="40.11,234; 40.11,-60" dur="4.85s" begin="0.54s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(48.15,242) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="3.18s" begin="0.72s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.24s" begin="0.72s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="48.15,242; 48.15,-60" dur="5.30s" begin="0.72s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(64.23,250) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="3.45s" begin="0.90s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.60s" begin="0.90s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="64.23,250; 64.23,-60" dur="5.75s" begin="0.90s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(1.06,258) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="2.10s" begin="1.08s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="1.08s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="1.06,258; 1.06,-60" dur="3.50s" begin="1.08s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(15.77,266) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="2.37s" begin="1.26s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="1.26s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="15.77,266; 15.77,-60" dur="3.95s" begin="1.26s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(23.86,274) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.64s" begin="1.44s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="1.44s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="23.86,274; 23.86,-60" dur="4.40s" begin="1.44s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(39.95,282) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="2.91s" begin="1.62s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="1.62s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="39.95,282; 39.95,-60" dur="4.85s" begin="1.62s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(50.20,210) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="3.18s" begin="1.80s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.24s" begin="1.80s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="50.20,210; 50.20,-60" dur="5.30s" begin="1.80s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(61.39,218) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="3.45s" begin="0.00s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.60s" begin="0.00s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="61.39,218; 61.39,-60" dur="5.75s" begin="0.00s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(5.31,226) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="2.10s" begin="0.18s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="0.18s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="5.31,226; 5.31,-60" dur="3.50s" begin="0.18s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(16.95,234) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.37s" begin="0.36s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="0.36s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="16.95,234; 16.95,-60" dur="3.95s" begin="0.36s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(28.80,242) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="2.64s" begin="0.54s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="0.54s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="28.80,242; 28.80,-60" dur="4.40s" begin="0.54s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(36.08,250) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="2.91s" begin="0.72s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="0.72s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="36.08,250; 36.08,-60" dur="4.85s" begin="0.72s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(50.58,258) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="3.18s" begin="0.90s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.24s" begin="0.90s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="50.58,258; 50.58,-60" dur="5.30s" begin="0.90s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(59.88,266) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="3.45s" begin="1.08s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.60s" begin="1.08s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="59.88,266; 59.88,-60" dur="5.75s" begin="1.08s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(2.40,274) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.10s" begin="1.26s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="1.26s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="2.40,274; 2.40,-60" dur="3.50s" begin="1.26s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(14.34,282) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="2.37s" begin="1.44s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="1.44s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="14.34,282; 14.34,-60" dur="3.95s" begin="1.44s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(24.69,210) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="2.64s" begin="1.62s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="1.62s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="24.69,210; 24.69,-60" dur="4.40s" begin="1.62s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(38.03,218) scale(1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="2.91s" begin="1.80s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="1.80s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="38.03,218; 38.03,-60" dur="4.85s" begin="1.80s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <g filter="url(#fGlow)" clip-path="url(#clip-right)">
+    <defs>
+      <clipPath id="clip-right">
+        <rect x="690" y="0" width="70" height="170" />
+      </clipPath>
+      
+  <!-- color ramps -->
+  <linearGradient id="gFlame" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%"  stop-color="#ff5a00"/>
+    <stop offset="55%" stop-color="#ffb300"/>
+    <stop offset="100%" stop-color="#fff4b0"/>
+  </linearGradient>
+
+  <!-- two slightly different flame shapes for variety -->
+  <symbol id="flameA" viewBox="-8 -26 16 26" overflow="visible">
+    <path d="M0,0 C-6,-6 -9,-16 -4,-23 C-2,-27 2,-27 4,-23 C9,-16 6,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M1,-6 C-3,-10 -4,-15 -2,-19 C-1,-21 1,-21 2,-19 C4,-15 3,-10 1,-6 Z" fill="#ffd56a" opacity=".55"/>
+  </symbol>
+  <symbol id="flameB" viewBox="-9 -28 18 28" overflow="visible">
+    <path d="M0,0 C-5,-6 -7,-14 -3,-22 C-1,-26 1,-26 3,-22 C7,-14 5,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M0.8,-7 C-2.6,-11 -3.5,-15 -1.8,-19 C-1.1,-21 0.8,-21 1.7,-19 C3.8,-15 2.8,-11 0.8,-7 Z" fill="#ffd56a" opacity=".45"/>
+  </symbol>
+
+  <!-- displacement to make fire wobble -->
+  <filter id="fWobble" x="-100%" y="-100%" width="300%" height="300%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="n">
+      <animate attributeName="baseFrequency" values="0.7;1.15;0.7" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="seed" values="11;13;17;11" dur="2.6s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="7">
+      <animate attributeName="scale" values="4;12;6;10;4" dur="1.4s" repeatCount="indefinite"/>
+    </feDisplacementMap>
+  </filter>
+
+  <!-- warm glow -->
+  <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="5" result="b1"/>
+    <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b2"/>
+    <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+
+  <!-- subtle hot core for ring center -->
+  <radialGradient id="gCore" r="78%">
+    <stop offset="0%"  stop-color="#ffffff" stop-opacity=".52"/>
+    <stop offset="60%" stop-color="#e11d48" stop-opacity=".38"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+  </radialGradient>
+
+    </defs>
+    
+    <g transform="translate(688.96,210) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="2.10s" begin="0.40s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="0.40s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="688.96,210; 688.96,-60" dur="3.50s" begin="0.40s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(699.64,218) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="2.37s" begin="0.58s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="0.58s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="699.64,218; 699.64,-60" dur="3.95s" begin="0.58s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(708.11,226) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="2.64s" begin="0.76s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="0.76s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="708.11,226; 708.11,-60" dur="4.40s" begin="0.76s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(724.47,234) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.91s" begin="0.94s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="0.94s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="724.47,234; 724.47,-60" dur="4.85s" begin="0.94s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(736.39,242) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="3.18s" begin="1.12s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.24s" begin="1.12s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="736.39,242; 736.39,-60" dur="5.30s" begin="1.12s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(746.04,250) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="3.45s" begin="1.30s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.60s" begin="1.30s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="746.04,250; 746.04,-60" dur="5.75s" begin="1.30s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(686.39,258) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="2.10s" begin="1.48s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="1.48s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="686.39,258; 686.39,-60" dur="3.50s" begin="1.48s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(699.58,266) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="2.37s" begin="1.66s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="1.66s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="699.58,266; 699.58,-60" dur="3.95s" begin="1.66s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(713.04,274) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.64s" begin="1.84s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="1.84s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="713.04,274; 713.04,-60" dur="4.40s" begin="1.84s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(721.72,282) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="2.91s" begin="2.02s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="2.02s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="721.72,282; 721.72,-60" dur="4.85s" begin="2.02s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(730.92,210) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="3.18s" begin="2.20s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.24s" begin="2.20s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="730.92,210; 730.92,-60" dur="5.30s" begin="2.20s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(743.72,218) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="3.45s" begin="0.40s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.60s" begin="0.40s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="743.72,218; 743.72,-60" dur="5.75s" begin="0.40s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(687.23,226) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="2.10s" begin="0.58s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="0.58s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="687.23,226; 687.23,-60" dur="3.50s" begin="0.58s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(699.74,234) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.37s" begin="0.76s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="0.76s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="699.74,234; 699.74,-60" dur="3.95s" begin="0.76s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(710.67,242) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="2.64s" begin="0.94s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="0.94s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="710.67,242; 710.67,-60" dur="4.40s" begin="0.94s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(721.40,250) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="2.91s" begin="1.12s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="1.12s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="721.40,250; 721.40,-60" dur="4.85s" begin="1.12s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(733.13,258) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="3.18s" begin="1.30s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.24s" begin="1.30s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="733.13,258; 733.13,-60" dur="5.30s" begin="1.30s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(743.49,266) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.96;1.26;0.96"
+          keyTimes="0;0.5;1" dur="3.45s" begin="1.48s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="4.60s" begin="1.48s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="743.49,266; 743.49,-60" dur="5.75s" begin="1.48s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(685.23,274) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.04;1.34;1.04"
+          keyTimes="0;0.5;1" dur="2.10s" begin="1.66s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="2.80s" begin="1.66s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="685.23,274; 685.23,-60" dur="3.50s" begin="1.66s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(700.88,282) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="1.12;1.42;1.12"
+          keyTimes="0;0.5;1" dur="2.37s" begin="1.84s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.16s" begin="1.84s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="700.88,282; 700.88,-60" dur="3.95s" begin="1.84s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(709.29,210) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameB" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.80;1.10;0.80"
+          keyTimes="0;0.5;1" dur="2.64s" begin="2.02s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.52s" begin="2.02s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="709.29,210; 709.29,-60" dur="4.40s" begin="2.02s" repeatCount="indefinite"/>
+    </g>
+    <g transform="translate(724.67,218) scale(-1,1)" filter="url(#fWobble)">
+      <use xlink:href="#flameA" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="0.88;1.18;0.88"
+          keyTimes="0;0.5;1" dur="2.91s" begin="2.20s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="3.88s" begin="2.20s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="724.67,218; 724.67,-60" dur="4.85s" begin="2.20s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
   <text x="150" y="34" class="title" text-anchor="middle">Total Contributions</text>
   
   <g>
@@ -653,7 +1198,7 @@
       dur="6.4s" repeatCount="indefinite"/>
   </g>
   <g>
-    <text x="150" y="98" class="leftLabel" text-anchor="middle">3,597</text>
+    <text x="150" y="98" class="leftLabel" text-anchor="middle">3,603</text>
     <text x="150" y="120" class="leftSub"   text-anchor="middle">2025-08-11</text>
     <animate attributeName="opacity"
       values="0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;1"
@@ -665,330 +1210,383 @@
   
 <g transform="translate(380,104)">
   <defs>
-    <!-- gradient for flame sprite -->
-    <linearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%"  stop-color="#ff6200"/>
-      <stop offset="55%" stop-color="#ffae00"/>
-      <stop offset="100%" stop-color="#fff2a6"/>
-    </linearGradient>
+  <!-- color ramps -->
+  <linearGradient id="gFlame" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%"  stop-color="#ff5a00"/>
+    <stop offset="55%" stop-color="#ffb300"/>
+    <stop offset="100%" stop-color="#fff4b0"/>
+  </linearGradient>
 
-    <!-- sprite glyph -->
-    <symbol id="flame" viewBox="-8 -26 16 26" overflow="visible">
-      <path d="M0,0 C-6,-6 -8,-14 -4,-22 C-2,-26 2,-26 4,-22 C8,-14 6,-6 0,0 Z"
-            fill="url(#flameGrad)"/>
-      <!-- inner highlight -->
-      <path d="M1,-5 C-3,-9 -4,-14 -2,-18 C-1,-20 1,-20 2,-18 C4,-14 3,-9 1,-5 Z"
-            fill="#ffd15a" opacity=".6"/>
-    </symbol>
+  <!-- two slightly different flame shapes for variety -->
+  <symbol id="flameA" viewBox="-8 -26 16 26" overflow="visible">
+    <path d="M0,0 C-6,-6 -9,-16 -4,-23 C-2,-27 2,-27 4,-23 C9,-16 6,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M1,-6 C-3,-10 -4,-15 -2,-19 C-1,-21 1,-21 2,-19 C4,-15 3,-10 1,-6 Z" fill="#ffd56a" opacity=".55"/>
+  </symbol>
+  <symbol id="flameB" viewBox="-9 -28 18 28" overflow="visible">
+    <path d="M0,0 C-5,-6 -7,-14 -3,-22 C-1,-26 1,-26 3,-22 C7,-14 5,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M0.8,-7 C-2.6,-11 -3.5,-15 -1.8,-19 C-1.1,-21 0.8,-21 1.7,-19 C3.8,-15 2.8,-11 0.8,-7 Z" fill="#ffd56a" opacity=".45"/>
+  </symbol>
 
-    <!-- noise jitter to make flares dance -->
-    <filter id="flameJitter" x="-80%" y="-80%" width="260%" height="260%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="5" result="n">
-        <animate attributeName="baseFrequency" values="0.7;1.1;0.7" dur="1.4s" repeatCount="indefinite"/>
-        <animate attributeName="seed" values="5;7;9;5" dur="3s" repeatCount="indefinite"/>
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="6">
-        <animate attributeName="scale" values="3;10;4;8;3" dur="1.3s" repeatCount="indefinite"/>
-      </feDisplacementMap>
-    </filter>
+  <!-- displacement to make fire wobble -->
+  <filter id="fWobble" x="-100%" y="-100%" width="300%" height="300%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="n">
+      <animate attributeName="baseFrequency" values="0.7;1.15;0.7" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="seed" values="11;13;17;11" dur="2.6s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="7">
+      <animate attributeName="scale" values="4;12;6;10;4" dur="1.4s" repeatCount="indefinite"/>
+    </feDisplacementMap>
+  </filter>
 
-    <!-- ember stroke along ring -->
-    <linearGradient id="emberGrad" x1="0%" x2="100%">
-      <stop offset="0%"   stop-color="#ffd15a"/>
-      <stop offset="45%"  stop-color="#ff3b3b"/>
-      <stop offset="100%" stop-color="#ffd15a"/>
-    </linearGradient>
+  <!-- warm glow -->
+  <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="5" result="b1"/>
+    <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b2"/>
+    <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
 
-    <!-- header gradient/glow reused -->
-    <radialGradient id="coreGrad" r="78%">
-      <stop offset="0%"  stop-color="#ffffff" stop-opacity=".55"/>
-      <stop offset="60%" stop-color="#e11d48" stop-opacity=".40"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
-    </radialGradient>
+  <!-- subtle hot core for ring center -->
+  <radialGradient id="gCore" r="78%">
+    <stop offset="0%"  stop-color="#ffffff" stop-opacity=".52"/>
+    <stop offset="60%" stop-color="#e11d48" stop-opacity=".38"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+  </radialGradient>
+</defs>
 
-    <filter id="ringGlow" x="-70%" y="-70%" width="240%" height="240%">
-      <feGaussianBlur stdDeviation="5" result="b1"/>
-      <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b2"/>
-      <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-
-  <!-- dark seat -->
-  <circle r="44" fill="none" stroke="#1f2937" stroke-width="12"/>
-
-  <!-- halo flares (jittered rings) -->
-  <g filter="url(#flameJitter)">
-    <circle r="56" fill="none" stroke="#ff7a18" stroke-opacity=".55" stroke-width="9"/>
-    <circle r="62" fill="none" stroke="#ffa62b" stroke-opacity=".35" stroke-width="12"/>
-  </g>
+  <!-- seat -->
+  <circle r="44" fill="none" stroke="#111827" stroke-width="12"/>
 
   <!-- sprite crown -->
-  <g filter="url(#ringGlow)">
+  <g filter="url(#fGlow)">
     
-    <g transform="translate(0.000,-54.000) rotate(0)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="0.90s" begin="0s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(12.016,-52.646) rotate(12.857142857142856)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="1.10s" begin="0.12s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0.12s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(23.430,-48.652) rotate(25.71428571428571)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="1.30s" begin="0.24s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0.24s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(33.668,-42.219) rotate(38.57142857142857)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="1.50s" begin="0.36s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.36s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(42.219,-33.668) rotate(51.42857142857142)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="0.90s" begin="0.48s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0.48s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(48.652,-23.430) rotate(64.28571428571429)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="1.10s" begin="0s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(52.646,-12.016) rotate(77.14285714285714)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="1.30s" begin="0.12s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.12s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(54.000,0.000) rotate(90)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="1.50s" begin="0.24s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0.24s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(52.646,12.016) rotate(102.85714285714285)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="0.90s" begin="0.36s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0.36s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(48.652,23.430) rotate(115.71428571428572)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="1.10s" begin="0.48s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.48s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(42.219,33.668) rotate(128.57142857142858)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="1.30s" begin="0s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(33.668,42.219) rotate(141.42857142857142)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="1.50s" begin="0.12s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0.12s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(23.430,48.652) rotate(154.28571428571428)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="0.90s" begin="0.24s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.24s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(12.016,52.646) rotate(167.14285714285714)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="1.10s" begin="0.36s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0.36s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(0.000,54.000) rotate(180)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="1.30s" begin="0.48s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0.48s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-12.016,52.646) rotate(192.85714285714286)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="1.50s" begin="0s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-23.430,48.652) rotate(205.7142857142857)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="0.90s" begin="0.12s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0.12s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-33.668,42.219) rotate(218.57142857142856)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="1.10s" begin="0.24s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0.24s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-42.219,33.668) rotate(231.42857142857144)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="1.30s" begin="0.36s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.36s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-48.652,23.430) rotate(244.2857142857143)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="1.50s" begin="0.48s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0.48s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-52.646,12.016) rotate(257.14285714285717)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="0.90s" begin="0s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-54.000,0.000) rotate(270)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="1.10s" begin="0.12s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.12s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-52.646,-12.016) rotate(282.85714285714283)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="1.30s" begin="0.24s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0.24s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-48.652,-23.430) rotate(295.7142857142857)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="1.50s" begin="0.36s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0.36s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-42.219,-33.668) rotate(308.57142857142856)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="0.90s" begin="0.48s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.48s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-33.668,-42.219) rotate(321.42857142857144)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.90;1.15;0.90"
-          keyTimes="0;0.5;1" dur="1.10s" begin="0s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.30s" begin="0s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-23.430,-48.652) rotate(334.2857142857143)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.95;1.20;0.95"
-          keyTimes="0;0.5;1" dur="1.30s" begin="0.12s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.50s" begin="0.12s" repeatCount="indefinite"/>
-      </use>
-    </g>
-    <g transform="translate(-12.016,-52.646) rotate(347.14285714285717)">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="0.85;1.10;0.85"
-          keyTimes="0;0.5;1" dur="1.50s" begin="0.24s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="1.10s" begin="0.24s" repeatCount="indefinite"/>
-      </use>
-    </g>
-  </g>
-
-  <!-- rotating ember stroke just inside flames -->
-  <g filter="url(#ringGlow)">
-    <circle r="44" fill="none" stroke="url(#emberGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="70 240">
-      <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="3s" repeatCount="indefinite"/>
-      <animate attributeName="stroke-dasharray" values="60 250;95 215;130 180;95 215;60 250" dur="1.8s" repeatCount="indefinite"/>
-    </circle>
+      <g transform="translate(0.000,-53.000) rotate(6)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(9.203,-52.195) rotate(4)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="0.95s" begin="0.09s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.14s" begin="0.09s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(18.127,-49.804) rotate(26)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="1.10s" begin="0.18s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.32s" begin="0.18s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(26.500,-45.899) rotate(24)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="1.25s" begin="0.27s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.50s" begin="0.27s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(34.068,-40.600) rotate(46)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="1.40s" begin="0.36s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.68s" begin="0.36s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(40.600,-34.068) rotate(44)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(45.899,-26.500) rotate(66)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="0.95s" begin="0.54s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.14s" begin="0.54s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(49.804,-18.127) rotate(64)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="1.10s" begin="0s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.32s" begin="0s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(52.195,-9.203) rotate(86)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="1.25s" begin="0.09s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.50s" begin="0.09s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(53.000,0.000) rotate(84)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="1.40s" begin="0.18s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.68s" begin="0.18s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(52.195,9.203) rotate(106)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0.27s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0.27s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(49.804,18.127) rotate(104.00000000000001)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="0.95s" begin="0.36s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.14s" begin="0.36s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(45.899,26.500) rotate(126)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="1.10s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.32s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(40.600,34.068) rotate(124)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="1.25s" begin="0.54s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.50s" begin="0.54s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(34.068,40.600) rotate(146)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="1.40s" begin="0s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.68s" begin="0s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(26.500,45.899) rotate(144)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0.09s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0.09s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(18.127,49.804) rotate(166)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="0.95s" begin="0.18s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.14s" begin="0.18s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(9.203,52.195) rotate(164)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="1.10s" begin="0.27s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.32s" begin="0.27s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(0.000,53.000) rotate(186)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="1.25s" begin="0.36s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.50s" begin="0.36s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-9.203,52.195) rotate(184)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="1.40s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.68s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-18.127,49.804) rotate(206)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0.54s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0.54s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-26.500,45.899) rotate(204)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="0.95s" begin="0s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.14s" begin="0s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-34.068,40.600) rotate(226.00000000000003)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="1.10s" begin="0.09s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.32s" begin="0.09s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-40.600,34.068) rotate(223.99999999999997)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="1.25s" begin="0.18s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.50s" begin="0.18s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-45.899,26.500) rotate(246)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="1.40s" begin="0.27s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.68s" begin="0.27s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-49.804,18.127) rotate(244)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0.36s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0.36s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-52.195,9.203) rotate(266)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="0.95s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.14s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-53.000,0.000) rotate(264)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="1.10s" begin="0.54s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.32s" begin="0.54s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-52.195,-9.203) rotate(286)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="1.25s" begin="0s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.50s" begin="0s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-49.804,-18.127) rotate(284)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="1.40s" begin="0.09s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.68s" begin="0.09s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-45.899,-26.500) rotate(306)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0.18s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0.18s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-40.600,-34.068) rotate(304)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="0.95s" begin="0.27s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.14s" begin="0.27s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-34.068,-40.600) rotate(326)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="1.10s" begin="0.36s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.32s" begin="0.36s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-26.500,-45.899) rotate(324)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.85;1.13;0.85"
+            keyTimes="0;0.5;1" dur="1.25s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.50s" begin="0.44999999999999996s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-18.127,-49.804) rotate(346)" filter="url(#fWobble)">
+        <use xlink:href="#flameB" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.89;1.17;0.89"
+            keyTimes="0;0.5;1" dur="1.40s" begin="0.54s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="1.68s" begin="0.54s" repeatCount="indefinite"/>
+        </use>
+      </g>
+      <g transform="translate(-9.203,-52.195) rotate(344)" filter="url(#fWobble)">
+        <use xlink:href="#flameA" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="0.93;1.21;0.93"
+            keyTimes="0;0.5;1" dur="0.80s" begin="0s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="0.96s" begin="0s" repeatCount="indefinite"/>
+        </use>
+      </g>
   </g>
 
   <!-- hot core bloom -->
-  <circle r="52" fill="url(#coreGrad)">
+  <circle r="52" fill="url(#gCore)">
     <animate attributeName="opacity" values="0.22;0.40;0.22" dur="1.2s" repeatCount="indefinite"/>
   </circle>
 
