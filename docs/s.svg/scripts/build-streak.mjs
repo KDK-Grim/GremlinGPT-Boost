@@ -12,8 +12,8 @@ const r = await fetch("https://api.github.com/graphql", {
 method: "POST",
 headers: {
 Authorization: `bearer ${GH_TOKEN}`,
-“Content-Type”: "application/json",
-“User-Agent”: "ggpt-boost-streak"
+"Content-Type": "application/json",
+"User-Agent": "ggpt-boost-streak"
 },
 body: JSON.stringify({ query, variables })
 });
