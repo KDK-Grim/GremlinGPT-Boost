@@ -1,7 +1,5 @@
 name: Update Profile Trophies Badge
 
-
-
 on:
   schedule:
     - cron: "*/5 * * * *"
@@ -33,14 +31,9 @@ jobs:
 
       - name: Commit if changed
         run: |
-          set -euo pipefail
-          if ! git diff --quiet -- docs/t.svg/trophies.svg; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add docs/t.svg/trophies.svg
+            git add docs/t.svg/
             git commit -m "chore(trophies): refresh animated trophies"
             git pull --rebase
             git push
-          else
-            echo "No changes."
-          fi
