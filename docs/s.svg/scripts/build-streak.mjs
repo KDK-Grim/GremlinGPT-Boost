@@ -9,7 +9,7 @@ if (!GH_TOKEN) throw new Error("PAT_GITHUB env missing");
 // –––––––– GraphQL ––––––––
 const gql = async (query, variables = {}, attempt = 1) => {
 const r = await fetch("https://api.github.com/graphql", {
-method: “POST”,
+method: "POST",
 headers: {
 Authorization: `bearer ${GH_TOKEN}`,
 “Content-Type”: "application/json",
