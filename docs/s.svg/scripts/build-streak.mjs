@@ -1,9 +1,9 @@
 /**
  * Animated Streak (GitHub-safe SVG via SMIL)
  * - Lifetime contributions count-up (left)
- * - Realistic flickering ring-of-fire (center)
+ * - Realistic flame crown ring (center)
+ * - Rising edge flames on both sides
  * - Longest streaks carousel (right)
- * - Fully centered grid, blended headers
  */
 
 import fs from "node:fs/promises";
@@ -56,16 +56,14 @@ const now = new Date();
 const addDays = (d, n) => { const t = new Date(d); t.setUTCDate(t.getUTCDate() + n); return t; };
 
 let cursor = new Date(Date.UTC(
-  createdAt.getUTCFullYear(),
-  createdAt.getUTCMonth(),
-  createdAt.getUTCDate()
+  createdAt.getUTCFullYear(), createdAt.getUTCMonth(), createdAt.getUTCDate()
 ));
 
 const allDays = [];
 while (cursor < now) {
   const to = addDays(cursor, 365);
   const winFrom = cursor.toISOString();
-  const winTo = (to < now ? to : now).toISOString();
+  const winTo   = (to < now ? to : now).toISOString();
   const data = await gql(qCal, { login: USER, from: winFrom, to: winTo });
   const days = data.user.contributionsCollection.contributionCalendar.weeks
     .flatMap(w => w.contributionDays)
@@ -164,120 +162,141 @@ const mkRight = top.map((s, i) => {
   </g>`;
 }).join("");
 
-// ---------- flame crown builder ----------
-const FLAME_COUNT = 28;            // number of sprite flames around the ring
-const RING_R = 44;                  // ring radius
-const FLARE_R1 = 56, FLARE_R2 = 62; // halo radii
+// ---------- flame sprite defs ----------
+const FLAME_COUNT_RING = 36;     // ring flames
+const RING_R = 44;
+const EDGE_FLAMES = 22;          // per side
+const EDGE_W = 70;               // edge strip width
 
-const buildFlameCrown = () => {
-  // a stylized single flame path (relative coords), oriented pointing up at (0,0)
-  const flamePath = "M0,0 C-6,-6 -8,-14 -4,-22 C-2,-26 2,-26 4,-22 C8,-14 6,-6 0,0 Z";
-  let uses = "";
-  for (let i = 0; i < FLAME_COUNT; i++) {
-    const a = (i / FLAME_COUNT) * 360;
-    const phase = (i % 5) * 0.12;           // stagger flicker
-    const scale = (0.85 + (i % 3) * 0.05).toFixed(2);
-    // position flames on a slightly larger radius so they sit outside the ring edge
-    const rr = RING_R + 10;
-    const rad = (a - 90) * Math.PI / 180;   // -90 so 0deg is up
-    const x = (rr * Math.cos(rad)).toFixed(3);
-    const y = (rr * Math.sin(rad)).toFixed(3);
-    uses += `
-    <g transform="translate(${x},${y}) rotate(${a})">
-      <use xlink:href="#flame" opacity="0.9">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="${scale};${(+scale + 0.25).toFixed(2)};${scale}"
-          keyTimes="0;0.5;1" dur="${(0.9 + (i % 4) * 0.2).toFixed(2)}s" begin="${phase}s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.75;1;0.8" keyTimes="0;0.5;1"
-          dur="${(1.1 + (i % 3) * 0.2).toFixed(2)}s" begin="${phase}s" repeatCount="indefinite"/>
-      </use>
-    </g>`;
-  }
-  return uses;
-};
+const flameDefs = `
+  <!-- color ramps -->
+  <linearGradient id="gFlame" x1="0" y1="1" x2="0" y2="0">
+    <stop offset="0%"  stop-color="#ff5a00"/>
+    <stop offset="55%" stop-color="#ffb300"/>
+    <stop offset="100%" stop-color="#fff4b0"/>
+  </linearGradient>
 
-// ---------- full ring-of-fire (sprite flames + halo + ember stroke) ----------
+  <!-- two slightly different flame shapes for variety -->
+  <symbol id="flameA" viewBox="-8 -26 16 26" overflow="visible">
+    <path d="M0,0 C-6,-6 -9,-16 -4,-23 C-2,-27 2,-27 4,-23 C9,-16 6,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M1,-6 C-3,-10 -4,-15 -2,-19 C-1,-21 1,-21 2,-19 C4,-15 3,-10 1,-6 Z" fill="#ffd56a" opacity=".55"/>
+  </symbol>
+  <symbol id="flameB" viewBox="-9 -28 18 28" overflow="visible">
+    <path d="M0,0 C-5,-6 -7,-14 -3,-22 C-1,-26 1,-26 3,-22 C7,-14 5,-6 0,0 Z" fill="url(#gFlame)"/>
+    <path d="M0.8,-7 C-2.6,-11 -3.5,-15 -1.8,-19 C-1.1,-21 0.8,-21 1.7,-19 C3.8,-15 2.8,-11 0.8,-7 Z" fill="#ffd56a" opacity=".45"/>
+  </symbol>
+
+  <!-- displacement to make fire wobble -->
+  <filter id="fWobble" x="-100%" y="-100%" width="300%" height="300%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="n">
+      <animate attributeName="baseFrequency" values="0.7;1.15;0.7" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="seed" values="11;13;17;11" dur="2.6s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="7">
+      <animate attributeName="scale" values="4;12;6;10;4" dur="1.4s" repeatCount="indefinite"/>
+    </feDisplacementMap>
+  </filter>
+
+  <!-- warm glow -->
+  <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="5" result="b1"/>
+    <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b2"/>
+    <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+
+  <!-- subtle hot core for ring center -->
+  <radialGradient id="gCore" r="78%">
+    <stop offset="0%"  stop-color="#ffffff" stop-opacity=".52"/>
+    <stop offset="60%" stop-color="#e11d48" stop-opacity=".38"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+  </radialGradient>
+`;
+
+// ---------- ring (sprite crown) ----------
 const ring = `
 <g transform="translate(${C_X},104)">
-  <defs>
-    <!-- gradient for flame sprite -->
-    <linearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%"  stop-color="#ff6200"/>
-      <stop offset="55%" stop-color="#ffae00"/>
-      <stop offset="100%" stop-color="#fff2a6"/>
-    </linearGradient>
+  <defs>${flameDefs}</defs>
 
-    <!-- sprite glyph -->
-    <symbol id="flame" viewBox="-8 -26 16 26" overflow="visible">
-      <path d="M0,0 C-6,-6 -8,-14 -4,-22 C-2,-26 2,-26 4,-22 C8,-14 6,-6 0,0 Z"
-            fill="url(#flameGrad)"/>
-      <!-- inner highlight -->
-      <path d="M1,-5 C-3,-9 -4,-14 -2,-18 C-1,-20 1,-20 2,-18 C4,-14 3,-9 1,-5 Z"
-            fill="#ffd15a" opacity=".6"/>
-    </symbol>
-
-    <!-- noise jitter to make flares dance -->
-    <filter id="flameJitter" x="-80%" y="-80%" width="260%" height="260%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="5" result="n">
-        <animate attributeName="baseFrequency" values="0.7;1.1;0.7" dur="1.4s" repeatCount="indefinite"/>
-        <animate attributeName="seed" values="5;7;9;5" dur="3s" repeatCount="indefinite"/>
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="6">
-        <animate attributeName="scale" values="3;10;4;8;3" dur="1.3s" repeatCount="indefinite"/>
-      </feDisplacementMap>
-    </filter>
-
-    <!-- ember stroke along ring -->
-    <linearGradient id="emberGrad" x1="0%" x2="100%">
-      <stop offset="0%"   stop-color="#ffd15a"/>
-      <stop offset="45%"  stop-color="#ff3b3b"/>
-      <stop offset="100%" stop-color="#ffd15a"/>
-    </linearGradient>
-
-    <!-- header gradient/glow reused -->
-    <radialGradient id="coreGrad" r="78%">
-      <stop offset="0%"  stop-color="#ffffff" stop-opacity=".55"/>
-      <stop offset="60%" stop-color="#e11d48" stop-opacity=".40"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
-    </radialGradient>
-
-    <filter id="ringGlow" x="-70%" y="-70%" width="240%" height="240%">
-      <feGaussianBlur stdDeviation="5" result="b1"/>
-      <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b2"/>
-      <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-
-  <!-- dark seat -->
-  <circle r="${RING_R}" fill="none" stroke="#1f2937" stroke-width="12"/>
-
-  <!-- halo flares (jittered rings) -->
-  <g filter="url(#flameJitter)">
-    <circle r="${FLARE_R1}" fill="none" stroke="#ff7a18" stroke-opacity=".55" stroke-width="9"/>
-    <circle r="${FLARE_R2}" fill="none" stroke="#ffa62b" stroke-opacity=".35" stroke-width="12"/>
-  </g>
+  <!-- seat -->
+  <circle r="${RING_R}" fill="none" stroke="#111827" stroke-width="12"/>
 
   <!-- sprite crown -->
-  <g filter="url(#ringGlow)">
-    ${buildFlameCrown()}
-  </g>
-
-  <!-- rotating ember stroke just inside flames -->
-  <g filter="url(#ringGlow)">
-    <circle r="${RING_R}" fill="none" stroke="url(#emberGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="70 240">
-      <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="3s" repeatCount="indefinite"/>
-      <animate attributeName="stroke-dasharray" values="60 250;95 215;130 180;95 215;60 250" dur="1.8s" repeatCount="indefinite"/>
-    </circle>
+  <g filter="url(#fGlow)">
+    ${Array.from({length: FLAME_COUNT_RING}, (_, i) => {
+      const a = (i / FLAME_COUNT_RING) * 360;
+      const rr = RING_R + 9;
+      const rad = (a - 90) * Math.PI / 180;
+      const x = (rr * Math.cos(rad)).toFixed(3);
+      const y = (rr * Math.sin(rad)).toFixed(3);
+      const sym = i % 2 ? "flameA" : "flameB";
+      const s0 = 0.85 + (i % 3) * 0.04;
+      const s1 = s0 + 0.28;
+      const d  = (0.8 + (i % 5) * 0.15).toFixed(2);
+      const ph = (i % 7) * 0.09;
+      const lean = (i % 2 ? -6 : 6); // slight lean alternating
+      return `
+      <g transform="translate(${x},${y}) rotate(${a + lean})" filter="url(#fWobble)">
+        <use xlink:href="#${sym}" opacity="0.92">
+          <animateTransform attributeName="transform" additive="sum" type="scale"
+            values="${s0.toFixed(2)};${s1.toFixed(2)};${s0.toFixed(2)}"
+            keyTimes="0;0.5;1" dur="${d}s" begin="${ph}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.75;1;0.85" keyTimes="0;0.5;1"
+            dur="${(d*1.2).toFixed(2)}s" begin="${ph}s" repeatCount="indefinite"/>
+        </use>
+      </g>`;
+    }).join("")}
   </g>
 
   <!-- hot core bloom -->
-  <circle r="${RING_R + 8}" fill="url(#coreGrad)">
+  <circle r="${RING_R + 8}" fill="url(#gCore)">
     <animate attributeName="opacity" values="0.22;0.40;0.22" dur="1.2s" repeatCount="indefinite"/>
   </circle>
 
   <!-- number -->
   <text class="centerNum" text-anchor="middle" dy="10">${cs}</text>
 </g>`;
+
+// ---------- edges: rising flames (left & right) ----------
+function buildEdge(side /* 'left' | 'right' */) {
+  const x = side === "left" ? 0 : W - EDGE_W;
+  const mirror = side === "left" ? 1 : -1;
+  const baseDelay = side === "left" ? 0 : 0.4;
+
+  const columns = Array.from({length: EDGE_FLAMES}, (_, i) => {
+    const sym = i % 2 ? "flameA" : "flameB";
+    const scale = (0.8 + (i % 5) * 0.08).toFixed(2);
+    const dur = (3.5 + (i % 6) * 0.45).toFixed(2);
+    const delay = (baseDelay + (i % 11) * 0.18).toFixed(2);
+    const xpos = (x + (i % 6) * (EDGE_W / 6) + (Math.random() * 6) * mirror).toFixed(2);
+    const startY = H + 40 + (i % 10) * 8;
+    const endY   = -60;
+
+    return `
+    <g transform="translate(${xpos},${startY}) scale(${mirror},1)" filter="url(#fWobble)">
+      <use xlink:href="#${sym}" opacity="0.85">
+        <animateTransform attributeName="transform" additive="sum" type="scale"
+          values="${scale};${(parseFloat(scale)+0.3).toFixed(2)};${scale}"
+          keyTimes="0;0.5;1" dur="${(dur*0.6).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0.95;0.7" dur="${(dur*0.8).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
+      </use>
+      <animateTransform attributeName="transform" type="translate"
+        values="${xpos},${startY}; ${xpos},${endY}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+    </g>`;
+  }).join("");
+
+  return `
+  <g filter="url(#fGlow)" clip-path="url(#clip-${side})">
+    <defs>
+      <clipPath id="clip-${side}">
+        <rect x="${x}" y="0" width="${EDGE_W}" height="${H}" />
+      </clipPath>
+      ${flameDefs}
+    </defs>
+    ${columns}
+  </g>`;
+}
+
+const edges = `${buildEdge("left")}\n${buildEdge("right")}`;
 
 // ---------- SVG shell ----------
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
@@ -299,6 +318,8 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
+
+  ${edges}
 
   <text x="${L_X}" y="${TITLE_Y}" class="title" text-anchor="middle">Total Contributions</text>
   ${mkLeft}
