@@ -1,0 +1,45 @@
+name: Update Profile Streak Badge
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: "*5 * * * *"   # every 5 hours
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install (no extraneous)
+        working-directory: docs/s.svg
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Build Streak SVG
+        env:
+          PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
+          GH_USER: statikfintechllc
+        working-directory: docs/s.svg
+        run: npm run build
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          if ! git diff --quiet -- docs/s.svg/streak.svg; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/s.svg/streak.svg
+            git commit -m "chore(streak): refresh animated streak badge"
+            git pull --rebase
+            git push
+          else
+            echo "No changes."
+          fi

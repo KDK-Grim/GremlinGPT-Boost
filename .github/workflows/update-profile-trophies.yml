@@ -1,0 +1,45 @@
+name: Update Profile Trophies Badge
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: "*5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install (no extraneous)
+        working-directory: docs/t.svg
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Build Trophies SVG
+        env:
+          PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
+          GH_USER: statikfintechllc
+        working-directory: docs/t.svg
+        run: npm run build
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          if ! git diff --quiet -- docs/t.svg/trophies.svg; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/t.svg/trophies.svg
+            git commit -m "chore(trophies): refresh animated trophies"
+            git pull --rebase
+            git push
+          else
+            echo "No changes."
+          fi
