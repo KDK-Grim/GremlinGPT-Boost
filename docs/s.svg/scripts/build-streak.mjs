@@ -1,9 +1,3 @@
-// Animated Streak with REAL FIRE (GitHub-safe SVG via SMIL)
-// - Lifetime contributions count-up (left)
-// - Realistic ring of fire (center)  
-// - Edge flames instead of golden bubbles
-// - Longest streaks carousel (right)
-
 import fs from "node:fs/promises”;
 import path from “node:path”;
 
