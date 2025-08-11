@@ -28,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PULL_STATIK_PAT }}
           GITHUB_TOKEN: ${{ secrets.PULL_STATIK_PAT }}
           USER_LOGIN: statikfintechllc
-        run: npm run build:flow
+        run: node docs/svg/scripts/generate-crimson-flow.mjs
 
       - name: Update SVG
         env:
