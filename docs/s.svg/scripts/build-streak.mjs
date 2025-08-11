@@ -1,8 +1,8 @@
 /**
- * Animated Streak with REAL FIRE effects
- * - Realistic flame shapes around the ring
- * - Fire elements on screen edges
- * - Proper flame colors and animation
+ * Animated Streak — REAL FIRE (GitHub-safe SVG/SMIL)
+ * - Jagged, randomized flame tongues (no bubbles)
+ * - Flame crown ring + rising edge flames + sparks
+ * - Accurate data (same GraphQL as before)
  */
 
 import fs from "node:fs/promises";
@@ -13,7 +13,7 @@ const GH_TOKEN = process.env.PAT_GITHUB;
 const USER = process.env.GH_USER || "statikfintechllc";
 if (!GH_TOKEN) throw new Error("PAT_GITHUB env missing");
 
-// -------- GraphQL --------
+// ---------------- GraphQL ----------------
 const gql = async (query, variables = {}, attempt = 1) => {
   const r = await fetch("https://api.github.com/graphql", {
     method: "POST",
@@ -43,11 +43,10 @@ const qCal = `query($login:String!, $from:DateTime!, $to:DateTime!){
   }
 }`;
 
-// -------- collect lifetime daily contributions --------
+// ---------------- Data ----------------
 const who = await gql(qUser, { login: USER });
 const createdAt = new Date(who.user.createdAt);
 const now = new Date();
-
 const addDays = (d, n) => { const t = new Date(d); t.setUTCDate(t.getUTCDate() + n); return t; };
 
 let cursor = new Date(Date.UTC(
@@ -69,18 +68,15 @@ while (cursor < now) {
   cursor = to;
 }
 
-// unique + sort
 const byDate = new Map();
 for (const d of allDays) byDate.set(d.date, (byDate.get(d.date) || 0) + d.count);
 const days = [...byDate.entries()]
   .map(([date, count]) => ({ date, count }))
   .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-// cumulative timeline
 let run = 0;
 const timeline = days.map(d => ({ date: d.date, total: (run += d.count) }));
 
-// current streak (ending today)
 let cs = 0;
 for (let i = days.length - 1; i >= 0; i--) {
   if (new Date(days[i].date) > now) continue;
@@ -88,7 +84,6 @@ for (let i = days.length - 1; i >= 0; i--) {
   else break;
 }
 
-// longest streaks
 const streaks = [];
 let cur = 0, start = null;
 for (let i = 0; i < days.length; i++) {
@@ -112,15 +107,14 @@ const sample = (() => {
   return Array.from({ length: MAX_FRAMES }, (_, i) => timeline[Math.round(i * step)]);
 })();
 
-// -------- layout constants (centered columns) --------
-const W = 760, H = 170;
+// ---------------- Layout ----------------
+const W = 760, H = 178;
 const L_X = 150, C_X = 380, R_X = 610;
-const TITLE_Y = 34, NUM_Y = 98, SUB_Y = 120;
+const TITLE_Y = 34, NUM_Y = 102, SUB_Y = 126;
 
-// -------- left carousel (loop) --------
+// ---------------- Carousels ----------------
 const LEFT_FRAMES = sample.length;
 const LEFT_DUR = +(LEFT_FRAMES * 0.08).toFixed(2);
-
 const mkLeft = sample.map((p, i) => {
   const keyTimes = [], values = [];
   for (let k = 0; k <= LEFT_FRAMES; k++) {
@@ -135,10 +129,8 @@ const mkLeft = sample.map((p, i) => {
   </g>`;
 }).join("");
 
-// -------- right carousel (longest streaks, loop) --------
 const RIGHT_FRAMES = Math.max(1, top.length);
 const RIGHT_DUR = +(RIGHT_FRAMES * 2.4).toFixed(2);
-
 const mkRight = top.map((s, i) => {
   const keyTimes = [], values = [];
   for (let k = 0; k <= RIGHT_FRAMES; k++) {
@@ -153,178 +145,198 @@ const mkRight = top.map((s, i) => {
   </g>`;
 }).join("");
 
-// -------- realistic flame builder --------
-const FLAME_COUNT = 32;
+// ---------------- Deterministic RNG ----------------
+let seed = 0x9e3779b9 ^ (USER.length << 16) ^ (createdAt.getUTCFullYear() << 1);
+const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0, seed / 0x100000000);
+const r = (a, b) => a + (b - a) * rnd();
+
+// ---------------- Flame path generator ----------------
+function flamePath(w, h, teeth) {
+  // Build a jagged tongue: left edge up with random insets, tip, right edge down
+  const segments = Math.max(4, teeth | 0);
+  const step = h / segments;
+  let dL = `M0,0 `;
+  let y = 0;
+  for (let i = 0; i < segments; i++) {
+    const nx = -r(w * 0.35, w * 0.65); // random left bite
+    const ny = y - step;
+    const cx = -r(w * 0.15, w * 0.45);
+    dL += `C ${cx},${y - step * 0.35} ${nx},${y - step * 0.7} ${nx},${ny} `;
+    y = ny;
+  }
+  const tipX = 0, tipY = -h - r(4, 10);
+  // right edge back
+  let dR = `L ${tipX},${tipY} `;
+  y = -h;
+  for (let i = segments - 1; i >= 0; i--) {
+    const nx = r(w * 0.35, w * 0.65);
+    const ny = y + step;
+    const cx = r(w * 0.15, w * 0.45);
+    dR += `C ${cx},${y + step * 0.35} ${nx},${y + step * 0.7} ${nx},${ny} `;
+    y = ny;
+  }
+  return `${dL}${dR}Z`;
+}
+
+// create N alternative shapes for d-attribute animation
+function flameDVariants(w, h, teeth, n = 3) {
+  return Array.from({ length: n }, () => flamePath(w, h, teeth)).join(";");
+}
+
+// ---------------- Ring flames (no circles) ----------------
 const RING_R = 44;
+const RING_COUNT = 40;
 
-const buildRealisticFlames = () => {
-  // More realistic flame path with irregular edges and multiple tongues
-  const flameVariations = [
-    "M0,0 C-3,-8 -6,-16 -8,-24 C-9,-30 -7,-35 -4,-38 C-2,-40 0,-41 2,-40 C4,-38 6,-35 5,-30 C4,-24 2,-16 -1,-8 Z M0,0 C3,-6 5,-14 4,-22 C3,-28 1,-32 -1,-34 C0,-36 1,-37 2,-36 C3,-34 4,-30 3,-26 C2,-20 0,-12 0,-6 Z",
-    "M0,0 C-4,-5 -7,-12 -9,-20 C-10,-28 -8,-34 -5,-38 C-3,-41 -1,-42 1,-41 C3,-39 5,-35 4,-30 C3,-25 1,-18 -2,-10 Z M0,0 C2,-4 4,-10 6,-16 C7,-22 6,-27 4,-30 C3,-32 2,-33 1,-32 C0,-30 -1,-27 0,-23 C1,-17 1,-10 0,-5 Z",
-    "M0,0 C-5,-7 -8,-15 -10,-23 C-11,-31 -9,-37 -6,-40 C-4,-42 -2,-43 0,-42 C2,-40 4,-37 3,-32 C2,-26 0,-17 -3,-9 Z M0,0 C3,-5 5,-11 7,-18 C8,-24 7,-29 5,-32 C4,-34 3,-35 2,-34 C1,-32 0,-29 1,-25 C2,-19 2,-12 1,-6 Z"
-  ];
+function buildRing() {
+  let crown = "";
+  for (let i = 0; i < RING_COUNT; i++) {
+    const angle = (i / RING_COUNT) * 360;
+    const rr = RING_R + 11;
+    const rad = (angle - 90) * Math.PI / 180;
+    const x = (rr * Math.cos(rad)).toFixed(2);
+    const y = (rr * Math.sin(rad)).toFixed(2);
+    const w = r(10, 16);
+    const h = r(20, 50);
+    const teeth = r(5, 9) | 0;
+    const dVals = flameDVariants(w, h, teeth, 4);
+    const dur = r(0.9, 1.8).toFixed(2);
+    const sc0 = r(0.75, 0.95).toFixed(2);
+    const sc1 = (parseFloat(sc0) + r(0.22, 0.36)).toFixed(2);
+    const delay = (i * 0.07).toFixed(2);
+    const lean = (i % 2 ? -r(4, 8) : r(4, 8)).toFixed(1);
 
-  let flames = "";
-  for (let i = 0; i < FLAME_COUNT; i++) {
-    const a = (i / FLAME_COUNT) * 360;
-    const phase = (i % 7) * 0.15;
-    const scale = (0.7 + (i % 4) * 0.08).toFixed(2);
-    const flameShape = flameVariations[i % flameVariations.length];
-
-    const rr = RING_R + 15; // Position flames outside the ring
-    const rad = (a - 90) * Math.PI / 180;
-    const x = (rr * Math.cos(rad)).toFixed(3);
-    const y = (rr * Math.sin(rad)).toFixed(3);
-
-    flames += `
-    <g transform="translate(${x},${y}) rotate(${a})">
-      <path d="${flameShape}" fill="url(#realisticFlame)">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="${scale};${(+scale + 0.4).toFixed(2)};${(+scale + 0.15).toFixed(2)};${scale}"
-          keyTimes="0;0.3;0.7;1"
-          dur="${(0.8 + (i % 5) * 0.3).toFixed(2)}s"
-          begin="${phase}s"
-          repeatCount="indefinite"/>
-        <animate attributeName="opacity"
-          values="0.7;1;0.85;0.9;0.7"
-          keyTimes="0;0.25;0.5;0.75;1"
-          dur="${(1.0 + (i % 4) * 0.25).toFixed(2)}s"
-          begin="${phase}s"
-          repeatCount="indefinite"/>
-        <animate attributeName="fill-opacity"
-          values="0.9;1;0.95;0.9"
-          keyTimes="0;0.4;0.8;1"
-          dur="${(0.7 + (i % 3) * 0.2).toFixed(2)}s"
-          begin="${phase}s"
-          repeatCount="indefinite"/>
+    crown += `
+    <g transform="translate(${x},${y}) rotate(${angle + +lean})" filter="url(#fWobble)">
+      <!-- glow copy -->
+      <path d="${dVals.split(";")[0]}" fill="url(#gFlame)" opacity="0.55" filter="url(#fGlow)">
+        <animate attributeName="d" values="${dVals}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.45;0.85;0.55" dur="${(dur*1.2).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
+      </path>
+      <!-- main flame -->
+      <path d="${dVals.split(";")[0]}" fill="url(#gFlame)">
+        <animate attributeName="d" values="${dVals}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" additive="sum" type="scale" values="${sc0};${sc1};${sc0}" keyTimes="0;0.5;1" dur="${(dur*0.9).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;1;0.85" dur="${(dur*0.8).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
       </path>
     </g>`;
   }
-  return flames;
-};
+  return crown;
+}
 
-// -------- edge flames for screen borders --------
-const buildEdgeFlames = () => {
-  const leftFlames = Array.from({ length: 6 }, (_, i) => {
-    const y = 20 + i * 25;
-    const phase = i * 0.2;
-    const scale = (0.6 + (i % 3) * 0.1).toFixed(2);
-    return `
-    <g transform="translate(15,${y}) rotate(45)">
-      <path d="M0,0 C-2,-4 -4,-8 -5,-12 C-6,-16 -5,-19 -3,-21 C-1,-22 1,-22 2,-21 C3,-19 3,-16 2,-12 C1,-8 0,-4 0,0 Z" fill="url(#edgeFlame)">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="${scale};${(+scale + 0.3).toFixed(2)};${scale}"
-          dur="${(0.9 + (i % 3) * 0.2).toFixed(2)}s" begin="${phase}s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.6;1;0.8;0.6" dur="1.1s" begin="${phase}s" repeatCount="indefinite"/>
+function buildEmbers() {
+  let embers = "";
+  for (let i = 0; i < 15; i++) {
+    const x = r(-30, 30).toFixed(2);
+    const y = (RING_R + r(0, 15)).toFixed(2);
+    const rs = r(1, 4).toFixed(2);
+    const dur = r(1.5, 3.5).toFixed(2);
+    const delay = r(0, 2).toFixed(2);
+    embers += `
+    <circle cx="${x}" cy="${y}" r="${rs}" fill="#ff4500" opacity="0" filter="url(#fGlow)">
+      <animate attributeName="opacity" values="0;0.7;0" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="${rs};${(rs * 1.4).toFixed(2)};${rs}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+    </circle>`;
+  }
+  return embers;
+}
+
+// ---------------- Edge flames + sparks ----------------
+const EDGE_W = 76;
+const EDGE_FLAMES = 26;
+function buildEdge(side) {
+  const x0 = side === "left" ? 0 : W - EDGE_W;
+  const mirror = side === "left" ? 1 : -1;
+  const baseDelay = side === "left" ? 0 : 0.35;
+  let g = `
+  <clipPath id="clip-${side}"><rect x="${x0}" y="0" width="${EDGE_W}" height="${H}"/></clipPath>
+  <g clip-path="url(#clip-${side})">`;
+
+  for (let i = 0; i < EDGE_FLAMES; i++) {
+    const lane = i % 6;
+    const sx = x0 + 8 + lane * ((EDGE_W - 16) / 5) + (i % 2 ? -3 : 3);
+    const y0 = H + 40 + (i % 12) * 8;
+    const y1 = -70;
+    const w = r(8, 12);
+    const h = r(22, 36);
+    const teeth = r(4, 8) | 0;
+    const dVals = flameDVariants(w, h, teeth, 3);
+    const dur = r(3.0, 4.4).toFixed(2);
+    const delay = (baseDelay + (i % 11) * 0.18).toFixed(2);
+    const sc0 = r(0.7, 0.95).toFixed(2);
+    const sc1 = (parseFloat(sc0) + r(0.18, 0.32)).toFixed(2);
+    const jitter = (mirror * r(-2, 2)).toFixed(2);
+
+    g += `
+    <g transform="translate(${sx},${y0}) scale(${mirror},1)" filter="url(#fWobble)">
+      <path d="${dVals.split(";")[0]}" fill="url(#gFlame)" opacity="0.9">
+        <animate attributeName="d" values="${dVals}" dur="${(dur*0.9).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" additive="sum" type="scale" values="${sc0};${sc1};${sc0}" keyTimes="0;0.5;1" dur="${(dur*0.6).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.65;1;0.75" dur="${(dur*0.7).toFixed(2)}s" begin="${delay}s" repeatCount="indefinite"/>
       </path>
+      <animateTransform attributeName="transform" type="translate"
+        values="${sx},${y0}; ${(+sx + +jitter).toFixed(2)},${y1}"
+        dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
     </g>`;
-  }).join("");
+  }
 
-  const rightFlames = Array.from({ length: 6 }, (_, i) => {
-    const y = 20 + i * 25;
-    const phase = i * 0.18;
-    const scale = (0.55 + (i % 3) * 0.12).toFixed(2);
-    return `
-    <g transform="translate(${W - 15},${y}) rotate(-45)">
-      <path d="M0,0 C-2,-4 -4,-8 -5,-12 C-6,-16 -5,-19 -3,-21 C-1,-22 1,-22 2,-21 C3,-19 3,-16 2,-12 C1,-8 0,-4 0,0 Z" fill="url(#edgeFlame)">
-        <animateTransform attributeName="transform" additive="sum" type="scale"
-          values="${scale};${(+scale + 0.35).toFixed(2)};${scale}"
-          dur="${(0.85 + (i % 4) * 0.25).toFixed(2)}s" begin="${phase}s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.65;1;0.75;0.65" dur="1.0s" begin="${phase}s" repeatCount="indefinite"/>
-      </path>
-    </g>`;
-  }).join("");
+  // sparks
+  for (let i = 0; i < 12; i++) {
+    const sx = x0 + r(8, EDGE_W - 8);
+    const y0 = H + r(10, 50);
+    const dur = r(2.0, 3.0).toFixed(2);
+    const delay = r(0, 1.0).toFixed(2);
+    const pathLen = r(60, 110).toFixed(1);
+    g += `
+    <path d="M${sx},${y0} q ${r(-6,6).toFixed(1)},-${(pathLen/2).toFixed(1)} ${r(-8,8).toFixed(1)},-${pathLen}"
+          stroke="#ffd15a" stroke-width="1.2" stroke-linecap="round" opacity="0.0" filter="url(#fGlow)">
+      <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.4;1" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+    </path>`;
+  }
 
-  return leftFlames + rightFlames;
-};
+  g += `</g>`;
+  return g;
+}
 
-// -------- full ring-of-fire with realistic flames --------
-const ring = `
-<g transform="translate(${C_X},104)">
-  <defs>
-    <!-- Realistic flame gradient with proper fire colors -->
-    <radialGradient id="realisticFlame" cx="0.3" cy="0.8" r="0.8">
-      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.9"/>
-      <stop offset="15%" stop-color="#fff2a6" stop-opacity="0.95"/>
-      <stop offset="35%" stop-color="#ffae00" stop-opacity="1"/>
-      <stop offset="60%" stop-color="#ff6200" stop-opacity="0.9"/>
-      <stop offset="85%" stop-color="#cc1100" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#660000" stop-opacity="0.3"/>
-    </radialGradient>
-
-    <!-- Edge flame gradient -->
-    <radialGradient id="edgeFlame" cx="0.4" cy="0.7" r="0.9">
-      <stop offset="0%"  stop-color="#fff2a6" stop-opacity="0.8"/>
-      <stop offset="25%" stop-color="#ffae00" stop-opacity="0.9"/>
-      <stop offset="60%" stop-color="#ff4500" stop-opacity="0.8"/>
-      <stop offset="90%" stop-color="#cc1100" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#330000" stop-opacity="0.2"/>
-    </radialGradient>
-
-    <!-- Fire turbulence for realistic flicker -->
-    <filter id="fireDistortion" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="3" result="noise">
-        <animate attributeName="baseFrequency" values="0.8;1.2;0.9;1.1;0.8" dur="1.2s" repeatCount="indefinite"/>
-        <animate attributeName="seed" values="3;5;7;9;11;3" dur="2.5s" repeatCount="indefinite"/>
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4">
-        <animate attributeName="scale" values="2;6;4;7;3;5;2" dur="1.1s" repeatCount="indefinite"/>
-      </feDisplacementMap>
-    </filter>
-
-    <!-- Inner ring glow -->
-    <radialGradient id="innerGlow" cx="50%" cy="50%" r="60%">
-      <stop offset="0%"  stop-color="#ff6200" stop-opacity="0.4"/>
-      <stop offset="50%" stop-color="#ffae00" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#cc1100" stop-opacity="0.1"/>
-    </radialGradient>
-
-    <!-- Ring glow filter -->
-    <filter id="ringGlow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur stdDeviation="4" result="b1"/>
-      <feGaussianBlur stdDeviation="8" in="SourceGraphic" result="b2"/>
-      <feGaussianBlur stdDeviation="16" in="SourceGraphic" result="b3"/>
-      <feMerge><feMergeNode in="b3"/><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-
-  <!-- Dark ring base -->
-  <circle r="${RING_R}" fill="none" stroke="#0f0f0f" stroke-width="8" opacity="0.8"/>
-
-  <!-- Inner glow ring -->
-  <circle r="${RING_R - 5}" fill="url(#innerGlow)">
-    <animate attributeName="opacity" values="0.3;0.6;0.4;0.5;0.3" dur="1.3s" repeatCount="indefinite"/>
-  </circle>
-
-  <!-- Realistic flame crown -->
-  <g filter="url(#fireDistortion)">
-    <g filter="url(#ringGlow)">
-      ${buildRealisticFlames()}
-    </g>
-  </g>
-
-  <!-- Hot ember ring -->
-  <circle r="${RING_R}" fill="none" stroke="#ff4500" stroke-width="3" stroke-opacity="0.6" stroke-dasharray="20 40">
-    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="4s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-opacity" values="0.4;0.8;0.6;0.4" dur="0.9s" repeatCount="indefinite"/>
-  </circle>
-
-  <!-- Center number with fire glow -->
-  <text class="centerNum" text-anchor="middle" dy="10" filter="url(#ringGlow)">${cs}</text>
-</g>`;
-
-// -------- SVG shell --------
+// ---------------- SVG ----------------
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"
+     xmlns="http://www.w3.org/2000/svg">
   <style>
     :root{ color-scheme: dark; }
     .title{ font:700 18px system-ui; fill:url(#hdrGrad); filter:url(#hdrGlow) }
     .leftLabel,.rightLabel{ font:800 22px system-ui; fill:#60a5fa }
     .leftSub,.rightSub{ font:12px system-ui; fill:#9ca3af }
-    .centerNum{ font:900 28px system-ui; fill:#ff6200 }
+    .centerNum{ font:900 28px system-ui; fill:#ff5a00 }
   </style>
+
   <defs>
+    <!-- Flame gradient -->
+    <linearGradient id="gFlame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%"  stop-color="#4a0000"/>
+      <stop offset="20%" stop-color="#cc1100"/>
+      <stop offset="55%" stop-color="#ff6a00"/>
+      <stop offset="78%" stop-color="#ffb300"/>
+      <stop offset="100%" stop-color="#fff7bf"/>
+    </linearGradient>
+
+    <!-- wobble (turbulent displacement) -->
+    <filter id="fWobble" x="-120%" y="-120%" width="340%" height="340%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="n">
+        <animate attributeName="baseFrequency" values="0.75;1.2;0.9;0.75" dur="1.2s" repeatCount="indefinite"/>
+        <animate attributeName="seed" values="11;13;17;11" dur="2.6s" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="8">
+        <animate attributeName="scale" values="4;12;6;10;4" dur="1.3s" repeatCount="indefinite"/>
+      </feDisplacementMap>
+    </filter>
+
+    <!-- glow -->
+    <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="b1"/>
+      <feGaussianBlur stdDeviation="14" in="SourceGraphic" result="b2"/>
+      <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
     <linearGradient id="hdrGrad" x1="0" x2="1">
       <stop offset="0%"  stop-color="#d1d5db" stop-opacity=".85"/>
       <stop offset="100%" stop-color="#9ca3af" stop-opacity=".75"/>
@@ -335,14 +347,35 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
     </filter>
   </defs>
 
-  <!-- Background flames on edges -->
-  ${buildEdgeFlames()}
+  <!-- Edge flames (no bubbles) -->
+  ${buildEdge("left")}
+  ${buildEdge("right")}
 
   <text x="${L_X}" y="${TITLE_Y}" class="title" text-anchor="middle">Total Contributions</text>
   ${mkLeft}
 
   <text x="${C_X}" y="${TITLE_Y}" class="title" text-anchor="middle">Current Streak</text>
-  ${ring}
+
+  <!-- Ring base (dark seat) -->
+  <g transform="translate(${C_X},110)">
+    <!-- subtle seat only; no circular glows -->
+    <path d="M -${RING_R},0
+             a ${RING_R},${RING_R} 0 1,0 ${RING_R*2},0
+             a ${RING_R},${RING_R} 0 1,0 -${RING_R*2},0 Z"
+          fill="none" stroke="#3a0000" stroke-width="12" opacity="0.9" filter="url(#fWobble)"/>
+  </g>
+
+  <!-- Flame crown (jagged tongues) -->
+  <g transform="translate(${C_X},110)">
+    <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="60s" repeatCount="indefinite" additive="sum"/>
+    ${buildRing()}
+    ${buildEmbers()}
+  </g>
+
+  <!-- Center number with heavy glow -->
+  <g transform="translate(${C_X},110)">
+    <text class="centerNum" text-anchor="middle" dy="10" filter="url(#fGlow)">${cs}</text>
+  </g>
 
   <text x="${R_X}" y="${TITLE_Y}" class="title" text-anchor="middle">Longest Streaks</text>
   ${mkRight}
