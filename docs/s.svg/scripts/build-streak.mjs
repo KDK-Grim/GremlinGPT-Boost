@@ -121,31 +121,55 @@ const sample = (() => {
   return Array.from({length: MAX_FRAMES}, (_, i) => timeline[Math.round(i*step)]);
 })();
 
-// frame groups with explicit on/off
-const frameDur = 0.08; // 80ms
-const mkLeft = sample.map((p,i)=>{
-  const begin = (i*frameDur).toFixed(2);
-  const end   = ((i+1)*frameDur).toFixed(2);
+// ---------- LOOPING CAROUSELS ----------
+const LEFT_FRAMES = sample.length;
+const LEFT_SLOT = 0.08;                  // seconds for each step
+const LEFT_DUR  = +(LEFT_FRAMES * LEFT_SLOT).toFixed(2);
+
+const mkLeft = sample.map((p, i) => {
+  // build stepwise keyTimes (0..1) and values (0 or 1) so ONLY this frame is visible in its slot
+  const keyTimes = [];
+  const values   = [];
+  for (let k = 0; k <= LEFT_FRAMES; k++) {
+    keyTimes.push((k/LEFT_FRAMES).toFixed(6));
+    values.push((k === i || k === i+1) ? 1 : 0);
+  }
   return `
-  <g opacity="0">
+  <g>
     <text x="56" y="90" class="leftLabel">${p.total.toLocaleString()}</text>
     <text x="56" y="112" class="leftSub">${p.date}</text>
-    <set attributeName="opacity" to="1" begin="${begin}s" dur="0.001s" fill="freeze"/>
-    <set attributeName="opacity" to="0" begin="${end}s" dur="0.001s" fill="freeze"/>
+    <animate attributeName="opacity"
+      values="${values.join(";")}"
+      keyTimes="${keyTimes.join(";")}"
+      dur="${LEFT_DUR}s"
+      repeatCount="indefinite"/>
   </g>`;
 }).join("");
 
-const mkRight = top.map((s,i)=>{
-  const begin = (i*2.4).toFixed(2);
-  const end   = ((i+1)*2.4).toFixed(2);
+// right side (top longest streaks) — loop forever
+const RIGHT_FRAMES = Math.max(1, top.length);
+const RIGHT_SLOT   = 2.4;                // seconds per card
+const RIGHT_DUR    = +(RIGHT_FRAMES * RIGHT_SLOT).toFixed(2);
+
+const mkRight = top.map((s, i) => {
+  const keyTimes = [];
+  const values   = [];
+  for (let k = 0; k <= RIGHT_FRAMES; k++) {
+    keyTimes.push((k/RIGHT_FRAMES).toFixed(6));
+    values.push((k === i || k === i+1) ? 1 : 0);
+  }
   return `
-  <g opacity="0">
+  <g>
     <text x="470" y="90" class="rightLabel">${s.len} days</text>
     <text x="470" y="112" class="rightSub">${s.start} → ${s.end}</text>
-    <set attributeName="opacity" to="1" begin="${begin}s" dur="0.001s" fill="freeze"/>
-    <set attributeName="opacity" to="0" begin="${end}s" dur="0.001s" fill="freeze"/>
+    <animate attributeName="opacity"
+      values="${values.join(";")}"
+      keyTimes="${keyTimes.join(";")}"
+      dur="${RIGHT_DUR}s"
+      repeatCount="indefinite"/>
   </g>`;
 }).join("");
+
 
 // ring-of-fire
 const ring = `
@@ -198,9 +222,6 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 
   <text x="470" y="36" class="title">Longest Streaks</text>
   ${mkRight}
-
-  <!-- loop right cycle -->
-  <set attributeName="visibility" to="visible" begin="${(top.length*2.4).toFixed(2)}s" dur="0.01s" />
 </svg>`;
 
 await fs.mkdir(path.dirname(OUT), { recursive: true });
