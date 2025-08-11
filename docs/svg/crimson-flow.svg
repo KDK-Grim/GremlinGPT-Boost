@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- build: 2025-08-11T00:00:38.438Z user:statikfintechllc points:30 total365:3567 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="Crimson Flow Graph">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0d12"/><stop offset="100%" stop-color="#070a0d"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#121821" stroke-width="1"/>
+    </pattern>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="b1"/><feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9b0e2a" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#9b0e2a" stop-opacity=".14"/>
+      <stop offset="100%" stop-color="#9b0e2a" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-1 0" to="1 0" dur="9s" repeatCount="indefinite"/>
+    </linearGradient>
+    <pattern id="scan" width="2" height="6" patternUnits="userSpaceOnUse"><rect width="2" height="1" fill="#9b0e2a" opacity=".05"/></pattern>
+  </defs>
+
+  <rect width="1200" height="420" fill="url(#bgGrad)"/>
+  <rect x="40" y="60" width="1120" height="260" fill="url(#grid)"/>
+  <rect x="40" y="60" width="1120" height="260" fill="url(#sheen)"/>
+  <rect x="40" y="60" width="1120" height="260" fill="url(#scan)"/>
+
+  <text x="600" y="40" text-anchor="middle"
+        font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial"
+        font-size="22" fill="#9b0e2a" opacity=".95">Statik DK Smoke’s Crimson Flow</text>
+
+  <path d="M40.0,217.4 C47.7,231.1 63.2,265.3 78.6,285.8 C94.1,306.3 101.8,325.5 117.2,320.0 C132.7,314.5 140.4,263.9 155.9,258.4 C171.3,252.9 179.0,284.4 194.5,292.6 C209.9,300.8 217.7,310.4 233.1,299.5 C248.6,288.5 256.3,269.4 271.7,237.9 C287.2,206.4 294.9,133.9 310.3,142.1 C325.8,150.3 333.5,269.4 349.0,278.9 C364.4,288.5 372.1,205.1 387.6,190.0 C403.0,174.9 410.8,179.1 426.2,203.7 C441.7,228.3 449.4,302.2 464.8,313.2 C480.3,324.1 488.0,302.2 503.4,258.4 C518.9,214.6 526.6,98.3 542.1,94.2 C557.5,90.1 565.2,202.3 580.7,237.9 C596.1,273.5 603.9,276.2 619.3,272.1 C634.8,268.0 642.5,216.0 657.9,217.4 C673.4,218.7 681.1,266.6 696.6,278.9 C712.0,291.3 719.7,281.7 735.2,278.9 C750.6,276.2 758.3,257.1 773.8,265.3 C789.2,273.5 797.0,333.7 812.4,320.0 C827.9,306.3 835.6,232.4 851.0,196.8 C866.5,161.3 874.2,118.8 889.7,142.1 C905.1,165.4 912.8,281.7 928.3,313.2 C943.7,344.6 951.4,332.3 966.9,299.5 C982.3,266.6 990.1,144.8 1005.5,148.9 C1021.0,153.1 1028.7,288.5 1044.1,320.0 C1059.6,351.5 1067.3,325.5 1082.8,306.3 C1098.2,287.2 1105.9,221.5 1121.4,224.2 C1136.8,226.9 1152.3,300.8 1160.0,320.0 L 1160,320 L 40,320 Z" fill="#7a0f26" opacity=".13">
+    <animate attributeName="opacity" values=".10;.17;.10" dur="6s" repeatCount="indefinite"/>
+  </path>
+
+  <path id="curve" d="M40.0,217.4 C47.7,231.1 63.2,265.3 78.6,285.8 C94.1,306.3 101.8,325.5 117.2,320.0 C132.7,314.5 140.4,263.9 155.9,258.4 C171.3,252.9 179.0,284.4 194.5,292.6 C209.9,300.8 217.7,310.4 233.1,299.5 C248.6,288.5 256.3,269.4 271.7,237.9 C287.2,206.4 294.9,133.9 310.3,142.1 C325.8,150.3 333.5,269.4 349.0,278.9 C364.4,288.5 372.1,205.1 387.6,190.0 C403.0,174.9 410.8,179.1 426.2,203.7 C441.7,228.3 449.4,302.2 464.8,313.2 C480.3,324.1 488.0,302.2 503.4,258.4 C518.9,214.6 526.6,98.3 542.1,94.2 C557.5,90.1 565.2,202.3 580.7,237.9 C596.1,273.5 603.9,276.2 619.3,272.1 C634.8,268.0 642.5,216.0 657.9,217.4 C673.4,218.7 681.1,266.6 696.6,278.9 C712.0,291.3 719.7,281.7 735.2,278.9 C750.6,276.2 758.3,257.1 773.8,265.3 C789.2,273.5 797.0,333.7 812.4,320.0 C827.9,306.3 835.6,232.4 851.0,196.8 C866.5,161.3 874.2,118.8 889.7,142.1 C905.1,165.4 912.8,281.7 928.3,313.2 C943.7,344.6 951.4,332.3 966.9,299.5 C982.3,266.6 990.1,144.8 1005.5,148.9 C1021.0,153.1 1028.7,288.5 1044.1,320.0 C1059.6,351.5 1067.3,325.5 1082.8,306.3 C1098.2,287.2 1105.9,221.5 1121.4,224.2 C1136.8,226.9 1152.3,300.8 1160.0,320.0" fill="none" stroke="#c3193d" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 14" filter="url(#glow)">
+    <animate attributeName="stroke-dashoffset" values="0;-220" dur="4.8s" repeatCount="indefinite"/>
+  </path>
+
+  <g fill="#ffd1db">
+    <circle r="4"><animateMotion dur="7s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion><animate attributeName="opacity" values="1;.3;1" dur="2.2s" repeatCount="indefinite"/></circle>
+    <circle r="3" fill="#ffffff"><animateMotion dur="8.2s" begin="1s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion><animate attributeName="opacity" values=".7;.2;.7" dur="2.4s" repeatCount="indefinite"/></circle>
+    <circle r="3" fill="#ffc7d3"><animateMotion dur="6s" begin="2s" rotate="auto" repeatCount="indefinite"><mpath xlink:href="#curve"/></animateMotion><animate attributeName="opacity" values=".8;.3;.8" dur="2s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <text x="28" y="335" font-size="12" fill="#9b0e2a" opacity=".7">days ▶</text>
+  <text x="24" y="190" transform="rotate(-90 24,190)" font-size="12" fill="#9b0e2a" opacity=".7">contributions ▶</text>
+
+  <g font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial" font-size="15">
+    <g transform="translate(120,360)"><rect x="-12" y="-26" rx="10" ry="10" width="220" height="36" fill="#0a0d12" stroke="#9b0e2a" opacity=".92"/><text x="12" y="-6" fill="#94a3b8">Total Contributions (365d)</text><text x="12" y="12" fill="#9b0e2a" font-weight="700">3,567</text></g>
+    <g transform="translate(490,360)"><rect x="-12" y="-26" rx="10" ry="10" width="170" height="36" fill="#0a0d12" stroke="#9b0e2a" opacity=".92"/><text x="12" y="-6" fill="#94a3b8">Current Streak</text><text x="12" y="12" fill="#9b0e2a" font-weight="700">0</text></g>
+    <g transform="translate(800,360)"><rect x="-12" y="-26" rx="10" ry="10" width="170" height="36" fill="#0a0d12" stroke="#9b0e2a" opacity=".92"/><text x="12" y="-6" fill="#94a3b8">Longest Streak</text><text x="12" y="12" fill="#9b0e2a" font-weight="700">56</text></g>
+  </g>
+</svg>
