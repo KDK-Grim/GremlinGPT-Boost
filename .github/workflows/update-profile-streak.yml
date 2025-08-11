@@ -27,7 +27,7 @@ jobs:
           PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
           GH_USER: statikfintechllc
         working-directory: docs/s.svg
-        run: node docs/s.svg/scripts/build-streak.mjs 
+        run: node scripts/build-streak.mjs 
 
       - name: Commit if changed
         run: |
