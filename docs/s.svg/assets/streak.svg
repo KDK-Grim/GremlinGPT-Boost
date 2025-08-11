@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640" height="140" viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    :root{ color-scheme: dark; }
+    .title{ font: 700 16px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Noto Sans', 'Helvetica Neue', Arial, 'Apple Color Emoji','Segoe UI Emoji'; fill:#e5e7eb }
+    .leftLabel{ font: 700 20px system-ui; fill:#60a5fa }
+    .leftSub{ font: 12px system-ui; fill:#9ca3af }
+    .centerNum{ font: 800 24px system-ui; fill:#e11d48 }
+    .rightLabel{ font: 700 20px system-ui; fill:#60a5fa }
+    .rightSub{ font: 12px system-ui; fill:#9ca3af }
+  </style>
+
+  <!-- left block -->
+  <text x="24" y="32" class="title">Total Contributions</text>
+  <g id="lf0" visibility="visible">
+    <text x="80" y="80" class="leftLabel">1</text>
+    <text x="80" y="102" class="leftSub">2025-02-26</text>
+    <set xlink:href="#lf0" attributeName="visibility" to="visible" begin="0.00s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf1" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1</text>
+    <text x="80" y="102" class="leftSub">2025-03-04</text>
+    <set xlink:href="#lf1" attributeName="visibility" to="visible" begin="0.07s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf2" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1</text>
+    <text x="80" y="102" class="leftSub">2025-03-10</text>
+    <set xlink:href="#lf2" attributeName="visibility" to="visible" begin="0.14s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf3" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1</text>
+    <text x="80" y="102" class="leftSub">2025-03-17</text>
+    <set xlink:href="#lf3" attributeName="visibility" to="visible" begin="0.21s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf4" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1</text>
+    <text x="80" y="102" class="leftSub">2025-03-23</text>
+    <set xlink:href="#lf4" attributeName="visibility" to="visible" begin="0.28s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf5" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1</text>
+    <text x="80" y="102" class="leftSub">2025-03-29</text>
+    <set xlink:href="#lf5" attributeName="visibility" to="visible" begin="0.35s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf6" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1</text>
+    <text x="80" y="102" class="leftSub">2025-04-04</text>
+    <set xlink:href="#lf6" attributeName="visibility" to="visible" begin="0.42s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf7" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">280</text>
+    <text x="80" y="102" class="leftSub">2025-04-10</text>
+    <set xlink:href="#lf7" attributeName="visibility" to="visible" begin="0.49s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf8" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">304</text>
+    <text x="80" y="102" class="leftSub">2025-04-16</text>
+    <set xlink:href="#lf8" attributeName="visibility" to="visible" begin="0.56s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf9" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">380</text>
+    <text x="80" y="102" class="leftSub">2025-04-23</text>
+    <set xlink:href="#lf9" attributeName="visibility" to="visible" begin="0.63s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf10" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">390</text>
+    <text x="80" y="102" class="leftSub">2025-04-29</text>
+    <set xlink:href="#lf10" attributeName="visibility" to="visible" begin="0.70s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf11" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">390</text>
+    <text x="80" y="102" class="leftSub">2025-05-05</text>
+    <set xlink:href="#lf11" attributeName="visibility" to="visible" begin="0.77s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf12" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">390</text>
+    <text x="80" y="102" class="leftSub">2025-05-11</text>
+    <set xlink:href="#lf12" attributeName="visibility" to="visible" begin="0.84s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf13" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">469</text>
+    <text x="80" y="102" class="leftSub">2025-05-17</text>
+    <set xlink:href="#lf13" attributeName="visibility" to="visible" begin="0.91s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf14" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1,074</text>
+    <text x="80" y="102" class="leftSub">2025-05-24</text>
+    <set xlink:href="#lf14" attributeName="visibility" to="visible" begin="0.98s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf15" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">1,896</text>
+    <text x="80" y="102" class="leftSub">2025-05-30</text>
+    <set xlink:href="#lf15" attributeName="visibility" to="visible" begin="1.05s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf16" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">2,097</text>
+    <text x="80" y="102" class="leftSub">2025-06-05</text>
+    <set xlink:href="#lf16" attributeName="visibility" to="visible" begin="1.12s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf17" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">2,365</text>
+    <text x="80" y="102" class="leftSub">2025-06-11</text>
+    <set xlink:href="#lf17" attributeName="visibility" to="visible" begin="1.19s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf18" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">2,586</text>
+    <text x="80" y="102" class="leftSub">2025-06-17</text>
+    <set xlink:href="#lf18" attributeName="visibility" to="visible" begin="1.26s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf19" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">2,804</text>
+    <text x="80" y="102" class="leftSub">2025-06-24</text>
+    <set xlink:href="#lf19" attributeName="visibility" to="visible" begin="1.33s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf20" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,079</text>
+    <text x="80" y="102" class="leftSub">2025-06-30</text>
+    <set xlink:href="#lf20" attributeName="visibility" to="visible" begin="1.40s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf21" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,216</text>
+    <text x="80" y="102" class="leftSub">2025-07-06</text>
+    <set xlink:href="#lf21" attributeName="visibility" to="visible" begin="1.47s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf22" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,265</text>
+    <text x="80" y="102" class="leftSub">2025-07-12</text>
+    <set xlink:href="#lf22" attributeName="visibility" to="visible" begin="1.54s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf23" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,301</text>
+    <text x="80" y="102" class="leftSub">2025-07-18</text>
+    <set xlink:href="#lf23" attributeName="visibility" to="visible" begin="1.61s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf24" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,382</text>
+    <text x="80" y="102" class="leftSub">2025-07-24</text>
+    <set xlink:href="#lf24" attributeName="visibility" to="visible" begin="1.68s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf25" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,470</text>
+    <text x="80" y="102" class="leftSub">2025-07-31</text>
+    <set xlink:href="#lf25" attributeName="visibility" to="visible" begin="1.75s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf26" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,526</text>
+    <text x="80" y="102" class="leftSub">2025-08-06</text>
+    <set xlink:href="#lf26" attributeName="visibility" to="visible" begin="1.82s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf27" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-08-12</text>
+    <set xlink:href="#lf27" attributeName="visibility" to="visible" begin="1.89s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf28" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-08-18</text>
+    <set xlink:href="#lf28" attributeName="visibility" to="visible" begin="1.96s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf29" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-08-24</text>
+    <set xlink:href="#lf29" attributeName="visibility" to="visible" begin="2.03s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf30" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-08-31</text>
+    <set xlink:href="#lf30" attributeName="visibility" to="visible" begin="2.10s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf31" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-09-06</text>
+    <set xlink:href="#lf31" attributeName="visibility" to="visible" begin="2.17s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf32" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-09-12</text>
+    <set xlink:href="#lf32" attributeName="visibility" to="visible" begin="2.24s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf33" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-09-18</text>
+    <set xlink:href="#lf33" attributeName="visibility" to="visible" begin="2.31s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf34" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-09-24</text>
+    <set xlink:href="#lf34" attributeName="visibility" to="visible" begin="2.38s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf35" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-10-01</text>
+    <set xlink:href="#lf35" attributeName="visibility" to="visible" begin="2.45s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf36" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-10-07</text>
+    <set xlink:href="#lf36" attributeName="visibility" to="visible" begin="2.52s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf37" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-10-13</text>
+    <set xlink:href="#lf37" attributeName="visibility" to="visible" begin="2.59s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf38" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-10-19</text>
+    <set xlink:href="#lf38" attributeName="visibility" to="visible" begin="2.66s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf39" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-10-25</text>
+    <set xlink:href="#lf39" attributeName="visibility" to="visible" begin="2.73s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf40" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-10-31</text>
+    <set xlink:href="#lf40" attributeName="visibility" to="visible" begin="2.80s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf41" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-11-07</text>
+    <set xlink:href="#lf41" attributeName="visibility" to="visible" begin="2.87s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf42" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-11-13</text>
+    <set xlink:href="#lf42" attributeName="visibility" to="visible" begin="2.94s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf43" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-11-19</text>
+    <set xlink:href="#lf43" attributeName="visibility" to="visible" begin="3.01s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf44" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-11-25</text>
+    <set xlink:href="#lf44" attributeName="visibility" to="visible" begin="3.08s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf45" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-12-01</text>
+    <set xlink:href="#lf45" attributeName="visibility" to="visible" begin="3.15s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf46" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-12-08</text>
+    <set xlink:href="#lf46" attributeName="visibility" to="visible" begin="3.22s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf47" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-12-14</text>
+    <set xlink:href="#lf47" attributeName="visibility" to="visible" begin="3.29s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf48" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-12-20</text>
+    <set xlink:href="#lf48" attributeName="visibility" to="visible" begin="3.36s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf49" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2025-12-26</text>
+    <set xlink:href="#lf49" attributeName="visibility" to="visible" begin="3.43s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf50" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-01-01</text>
+    <set xlink:href="#lf50" attributeName="visibility" to="visible" begin="3.50s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf51" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-01-08</text>
+    <set xlink:href="#lf51" attributeName="visibility" to="visible" begin="3.57s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf52" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-01-14</text>
+    <set xlink:href="#lf52" attributeName="visibility" to="visible" begin="3.64s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf53" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-01-20</text>
+    <set xlink:href="#lf53" attributeName="visibility" to="visible" begin="3.71s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf54" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-01-26</text>
+    <set xlink:href="#lf54" attributeName="visibility" to="visible" begin="3.78s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf55" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-02-01</text>
+    <set xlink:href="#lf55" attributeName="visibility" to="visible" begin="3.85s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf56" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-02-07</text>
+    <set xlink:href="#lf56" attributeName="visibility" to="visible" begin="3.92s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf57" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-02-14</text>
+    <set xlink:href="#lf57" attributeName="visibility" to="visible" begin="3.99s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf58" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-02-20</text>
+    <set xlink:href="#lf58" attributeName="visibility" to="visible" begin="4.06s" dur="0.07s" fill="freeze"/>
+  </g>
+<g id="lf59" visibility="hidden">
+    <text x="80" y="80" class="leftLabel">3,595</text>
+    <text x="80" y="102" class="leftSub">2026-02-26</text>
+    <set xlink:href="#lf59" attributeName="visibility" to="visible" begin="4.13s" dur="0.07s" fill="freeze"/>
+  </g>
+
+  <!-- center ring -->
+  <text x="268" y="32" class="title">Current Streak</text>
+  
+<g transform="translate(300,85)">
+  <defs>
+    <radialGradient id="fireGrad" r="80%">
+      <stop offset="0%" stop-color="#fffb" />
+      <stop offset="60%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#0000" />
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="strokeGrad" x1="0%" x2="100%">
+      <stop offset="0%" stop-color="#ffae00"/>
+      <stop offset="50%" stop-color="#ff0044"/>
+      <stop offset="100%" stop-color="#ffd500"/>
+    </linearGradient>
+  </defs>
+
+  <!-- base circle -->
+  <circle r="38" fill="none" stroke="#1f2937" stroke-width="10"/>
+
+  <!-- animated fire arc -->
+  <g filter="url(#glow)">
+    <circle r="38" fill="none" stroke="url(#strokeGrad)" stroke-linecap="round" stroke-width="10" stroke-dasharray="40 240">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-dasharray" values="40 240;80 200;120 160;80 200;40 240" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="44" fill="url(#fireGrad)" opacity="0.4">
+      <animate attributeName="opacity" values="0.25;0.45;0.25" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- current streak number -->
+  <text text-anchor="middle" dy="6" class="centerNum">0</text>
+</g>
+
+
+  <!-- right block -->
+  <text x="520" y="32" class="title">Longest Streaks</text>
+  
+  <g id="rt0" visibility="visible">
+    <text x="520" y="80" class="rightLabel">56 days</text>
+    <text x="520" y="102" class="rightSub">2025-05-16 → 2025-07-10</text>
+    <set attributeName="visibility" to="visible" begin="0.00s" dur="2s" fill="freeze"/>
+  </g>
+
+  <g id="rt1" visibility="hidden">
+    <text x="520" y="80" class="rightLabel">17 days</text>
+    <text x="520" y="102" class="rightSub">2025-07-16 → 2025-08-01</text>
+    <set attributeName="visibility" to="visible" begin="2.20s" dur="2s" fill="freeze"/>
+  </g>
+
+  <g id="rt2" visibility="hidden">
+    <text x="520" y="80" class="rightLabel">9 days</text>
+    <text x="520" y="102" class="rightSub">2025-04-07 → 2025-04-15</text>
+    <set attributeName="visibility" to="visible" begin="4.40s" dur="2s" fill="freeze"/>
+  </g>
+
+  <!-- loop the right side cycle -->
+  <set xlink:href="#rt0" attributeName="visibility" to="visible" begin="6.6000000000000005s" dur="2s" fill="freeze"/>
+</svg>
