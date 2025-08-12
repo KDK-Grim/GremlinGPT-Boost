@@ -155,16 +155,16 @@ function flamePath(w, h, teeth) {
   // Build a jagged tongue: left edge up with random insets, tip, right edge down
   const segments = Math.max(4, teeth | 0);
   const step = h / segments;
-  let dL = `M0,0 `;
+  let dL = `M${-w/2},0 `;
   let y = 0;
   for (let i = 0; i < segments; i++) {
-    const nx = -r(w * 0.35, w * 0.65); // random left bite
+    const nx = -r(w * 0.35, w * 0.65);
     const ny = y - step;
     const cx = -r(w * 0.15, w * 0.45);
     dL += `C ${cx},${y - step * 0.35} ${nx},${y - step * 0.7} ${nx},${ny} `;
     y = ny;
   }
-  const tipX = 0, tipY = -h - r(4, 10);
+  const tipX = 0, tipY = -h - r(2, 6);
   // right edge back
   let dR = `L ${tipX},${tipY} `;
   y = -h;
@@ -175,7 +175,8 @@ function flamePath(w, h, teeth) {
     dR += `C ${cx},${y + step * 0.35} ${nx},${y + step * 0.7} ${nx},${ny} `;
     y = ny;
   }
-  return `${dL}${dR}Z`;
+  dR += `L ${w/2},0 Z`;
+  return `${dL}${dR}`;
 }
 
 // create N alternative shapes for d-attribute animation
@@ -185,25 +186,25 @@ function flameDVariants(w, h, teeth, n = 3) {
 
 // ---------------- Ring flames (no circles) ----------------
 const RING_R = 44;
-const RING_COUNT = 40;
+const RING_COUNT = 60;
 
 function buildRing() {
   let crown = "";
   for (let i = 0; i < RING_COUNT; i++) {
     const angle = (i / RING_COUNT) * 360;
-    const rr = RING_R + 11;
+    const rr = RING_R + 6;
     const rad = (angle - 90) * Math.PI / 180;
     const x = (rr * Math.cos(rad)).toFixed(2);
     const y = (rr * Math.sin(rad)).toFixed(2);
-    const w = r(10, 16);
-    const h = r(20, 50);
-    const teeth = r(5, 9) | 0;
+    const w = r(6, 12);
+    const h = r(15, 25);
+    const teeth = r(3, 6) | 0;
     const dVals = flameDVariants(w, h, teeth, 4);
     const dur = r(0.9, 1.8).toFixed(2);
     const sc0 = r(0.75, 0.95).toFixed(2);
     const sc1 = (parseFloat(sc0) + r(0.22, 0.36)).toFixed(2);
-    const delay = (i * 0.07).toFixed(2);
-    const lean = (i % 2 ? -r(4, 8) : r(4, 8)).toFixed(1);
+    const delay = (i * 0.05).toFixed(2);
+    const lean = (i % 2 ? -r(2, 4) : r(2, 4)).toFixed(1);
 
     crown += `
     <g transform="translate(${x},${y}) rotate(${angle + +lean})" filter="url(#fWobble)">
@@ -225,16 +226,19 @@ function buildRing() {
 
 function buildEmbers() {
   let embers = "";
-  for (let i = 0; i < 15; i++) {
-    const x = r(-30, 30).toFixed(2);
-    const y = (RING_R + r(0, 15)).toFixed(2);
-    const rs = r(1, 4).toFixed(2);
+  for (let i = 0; i < 20; i++) {
+    const angle = r(0, 360);
+    const rad = angle * Math.PI / 180;
+    const dist = r(RING_R - 5, RING_R + 5);
+    const x = (dist * Math.cos(rad)).toFixed(2);
+    const y = (dist * Math.sin(rad)).toFixed(2);
+    const rs = r(1, 3).toFixed(2);
     const dur = r(1.5, 3.5).toFixed(2);
     const delay = r(0, 2).toFixed(2);
     embers += `
     <circle cx="${x}" cy="${y}" r="${rs}" fill="#ff4500" opacity="0" filter="url(#fGlow)">
-      <animate attributeName="opacity" values="0;0.7;0" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
-      <animate attributeName="r" values="${rs};${(rs * 1.4).toFixed(2)};${rs}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.6;0" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="${rs};${(rs * 1.3).toFixed(2)};${rs}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
     </circle>`;
   }
   return embers;
@@ -242,7 +246,7 @@ function buildEmbers() {
 
 // ---------------- Edge flames + sparks ----------------
 const EDGE_W = 76;
-const EDGE_FLAMES = 26;
+const EDGE_FLAMES = 30;
 function buildEdge(side) {
   const x0 = side === "left" ? 0 : W - EDGE_W;
   const mirror = side === "left" ? 1 : -1;
@@ -254,17 +258,17 @@ function buildEdge(side) {
   for (let i = 0; i < EDGE_FLAMES; i++) {
     const lane = i % 6;
     const sx = x0 + 8 + lane * ((EDGE_W - 16) / 5) + (i % 2 ? -3 : 3);
-    const y0 = H + 40 + (i % 12) * 8;
-    const y1 = -70;
-    const w = r(8, 12);
-    const h = r(22, 36);
-    const teeth = r(4, 8) | 0;
+    const y0 = H + 30 + (i % 12) * 6;
+    const y1 = -80;
+    const w = r(6, 10);
+    const h = r(15, 30);
+    const teeth = r(3, 6) | 0;
     const dVals = flameDVariants(w, h, teeth, 3);
-    const dur = r(3.0, 4.4).toFixed(2);
-    const delay = (baseDelay + (i % 11) * 0.18).toFixed(2);
+    const dur = r(2.5, 4.0).toFixed(2);
+    const delay = (baseDelay + (i % 11) * 0.15).toFixed(2);
     const sc0 = r(0.7, 0.95).toFixed(2);
-    const sc1 = (parseFloat(sc0) + r(0.18, 0.32)).toFixed(2);
-    const jitter = (mirror * r(-2, 2)).toFixed(2);
+    const sc1 = (parseFloat(sc0) + r(0.15, 0.28)).toFixed(2);
+    const jitter = (mirror * r(-1.5, 1.5)).toFixed(2);
 
     g += `
     <g transform="translate(${sx},${y0}) scale(${mirror},1)" filter="url(#fWobble)">
@@ -280,16 +284,16 @@ function buildEdge(side) {
   }
 
   // sparks
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 15; i++) {
     const sx = x0 + r(8, EDGE_W - 8);
-    const y0 = H + r(10, 50);
-    const dur = r(2.0, 3.0).toFixed(2);
+    const y0 = H + r(10, 40);
+    const dur = r(1.5, 2.5).toFixed(2);
     const delay = r(0, 1.0).toFixed(2);
-    const pathLen = r(60, 110).toFixed(1);
+    const pathLen = r(50, 90).toFixed(1);
     g += `
-    <path d="M${sx},${y0} q ${r(-6,6).toFixed(1)},-${(pathLen/2).toFixed(1)} ${r(-8,8).toFixed(1)},-${pathLen}"
-          stroke="#ffd15a" stroke-width="1.2" stroke-linecap="round" opacity="0.0" filter="url(#fGlow)">
-      <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.4;1" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
+    <path d="M${sx},${y0} q ${r(-5,5).toFixed(1)},-${(pathLen/2).toFixed(1)} ${r(-6,6).toFixed(1)},-${pathLen}"
+          stroke="#ffd15a" stroke-width="1.0" stroke-linecap="round" opacity="0.0" filter="url(#fGlow)">
+      <animate attributeName="opacity" values="0;0.8;0" keyTimes="0;0.4;1" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>
     </path>`;
   }
 
@@ -321,19 +325,19 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 
     <!-- wobble (turbulent displacement) -->
     <filter id="fWobble" x="-120%" y="-120%" width="340%" height="340%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="n">
-        <animate attributeName="baseFrequency" values="0.75;1.2;0.9;0.75" dur="1.2s" repeatCount="indefinite"/>
-        <animate attributeName="seed" values="11;13;17;11" dur="2.6s" repeatCount="indefinite"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="11" result="n">
+        <animate attributeName="baseFrequency" values="0.7;1.1;0.8;0.7" dur="1.0s" repeatCount="indefinite"/>
+        <animate attributeName="seed" values="11;14;16;11" dur="2.4s" repeatCount="indefinite"/>
       </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="8">
-        <animate attributeName="scale" values="4;12;6;10;4" dur="1.3s" repeatCount="indefinite"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="6">
+        <animate attributeName="scale" values="3;10;5;8;3" dur="1.1s" repeatCount="indefinite"/>
       </feDisplacementMap>
     </filter>
 
     <!-- glow -->
     <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur stdDeviation="6" result="b1"/>
-      <feGaussianBlur stdDeviation="14" in="SourceGraphic" result="b2"/>
+      <feGaussianBlur stdDeviation="5" result="b1"/>
+      <feGaussianBlur stdDeviation="12" in="SourceGraphic" result="b2"/>
       <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
 
@@ -358,11 +362,10 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
 
   <!-- Ring base (dark seat) -->
   <g transform="translate(${C_X},110)">
-    <!-- subtle seat only; no circular glows -->
     <path d="M -${RING_R},0
              a ${RING_R},${RING_R} 0 1,0 ${RING_R*2},0
              a ${RING_R},${RING_R} 0 1,0 -${RING_R*2},0 Z"
-          fill="none" stroke="#3a0000" stroke-width="12" opacity="0.9" filter="url(#fWobble)"/>
+          fill="none" stroke="#200000" stroke-width="15" opacity="1" filter="url(#fGlow) url(#fWobble)"/>
   </g>
 
   <!-- Flame crown (jagged tongues) -->
