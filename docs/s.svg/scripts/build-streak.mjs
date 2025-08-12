@@ -77,11 +77,18 @@ const days = [...byDate.entries()]
 let run = 0;
 const timeline = days.map(d => ({ date: d.date, total: (run += d.count) }));
 
+// ---- current streak (end at most recent non-zero day, not strictly "today") ----
 let cs = 0;
-for (let i = days.length - 1; i >= 0; i--) {
-  if (new Date(days[i].date) > now) continue;
-  if (days[i].count > 0) cs++;
-  else break;
+if (days.length) {
+  // index at last day that is <= now
+  let i = days.length - 1;
+  while (i >= 0 && new Date(days[i].date) > now) i--;
+
+  // skip trailing zero-contribution days (e.g., no commit yet today)
+  while (i >= 0 && days[i].count === 0) i--;
+
+  // count consecutive >0 days backward
+  while (i >= 0 && days[i].count > 0) { cs++; i--; }
 }
 
 const streaks = [];
