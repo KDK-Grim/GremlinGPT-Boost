@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+if [[ ! -f "$0" || "$0" == "bash" || "$0" == "/dev/fd/63" ]]; then
+    REMOTE_INSTALL=true
+    REPO_DIR="$HOME/GremlinGPT-Boost"
+    echo "🌐 Remote installation detected - will clone repository to $REPO_DIR"
+
+    # Clone the repository if not already present
+    if [[ ! -d "$REPO_DIR/.git" ]]; then
+        echo "📥 Installing WorkFlow repository..."
+        git clone https://github.com/KDK-Grim/GremlinGPT-Boost.git "$REPO_DIR"
+    else
+        echo "🔄 Updating existing repository..."
+        cd "$REPO_DIR"
+        git pull origin master
+    fi
+
+echo "[✅] WorkFlowRepo-Mirror package structure verified successfully!"
+

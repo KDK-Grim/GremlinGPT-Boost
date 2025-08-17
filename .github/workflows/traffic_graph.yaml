@@ -1,0 +1,45 @@
+name: Update Traffic Graph
+
+on:
+  schedule:
+    - cron: "*/5 * * * *" # every 6 hours
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+ 
+    env:
+      # Used by your Python script
+      PAT_GITHUB: ${{ secrets.PAT_GITHUB }}
+      REPO: statikfintechllc/GremlinGPT
+      TRAFFIC_TITLE: GremlinGPT GitHub Traffic (Last 14 Days)
+      MPLBACKEND: Agg
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install deps
+        run: pip install --disable-pip-version-check --no-cache-dir requests matplotlib
+
+      - name: Build traffic data & graph
+        run: python -u ./docs/graph/fetch_traffic.py
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/graph/
+          git commit -m "Update traffic data and graph"
+          git pull --rebase
+          git push
+    
