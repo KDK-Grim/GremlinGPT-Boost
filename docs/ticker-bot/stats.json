@@ -14,7 +14,7 @@
     "views": 263,
     "visitors": 9,
     "pulls_count": 0,
-    "fetched": "2025-08-19T17:57:55.576079"
+    "fetched": "2025-08-19T18:29:32.421307"
   },
   {
     "repo": "GremlinGPT",
@@ -31,7 +31,7 @@
     "views": 157,
     "visitors": 23,
     "pulls_count": 0,
-    "fetched": "2025-08-19T17:57:56.603964"
+    "fetched": "2025-08-19T18:29:33.339105"
   },
   {
     "repo": "statik-server",
@@ -45,10 +45,10 @@
     "updated_at": "2025-08-16T21:14:42Z",
     "clones": 1,
     "uniques": 1,
-    "views": 33,
+    "views": 28,
     "visitors": 6,
     "pulls_count": 0,
-    "fetched": "2025-08-19T17:57:57.662642"
+    "fetched": "2025-08-19T18:29:34.371232"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -65,7 +65,7 @@
     "views": 217,
     "visitors": 6,
     "pulls_count": 1,
-    "fetched": "2025-08-19T17:57:58.787464"
+    "fetched": "2025-08-19T18:29:35.324453"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -82,7 +82,7 @@
     "views": 12,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-08-19T17:57:59.814058"
+    "fetched": "2025-08-19T18:29:36.253458"
   },
   {
     "repo": "dragon-boot",
@@ -96,10 +96,10 @@
     "updated_at": "2025-08-17T20:18:55Z",
     "clones": 24,
     "uniques": 14,
-    "views": 135,
+    "views": 131,
     "visitors": 13,
     "pulls_count": 1,
-    "fetched": "2025-08-19T17:58:00.983651"
+    "fetched": "2025-08-19T18:29:37.208388"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,7 +116,7 @@
     "views": 59,
     "visitors": 15,
     "pulls_count": 0,
-    "fetched": "2025-08-19T17:58:02.046003"
+    "fetched": "2025-08-19T18:29:38.078479"
   },
   {
     "repo": "GodCore",
@@ -133,7 +133,7 @@
     "views": 24,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-08-19T17:58:03.109929"
+    "fetched": "2025-08-19T18:29:38.982522"
   },
   {
     "repo": "AscendNet",
@@ -150,6 +150,6 @@
     "views": 16,
     "visitors": 7,
     "pulls_count": 0,
-    "fetched": "2025-08-19T17:58:04.146551"
+    "fetched": "2025-08-19T18:29:39.893798"
   }
 ]
