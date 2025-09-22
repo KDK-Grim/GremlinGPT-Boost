@@ -14,7 +14,7 @@
     "views": 112,
     "visitors": 13,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:51.619780"
+    "fetched": "2025-09-22T15:16:10.629307"
   },
   {
     "repo": "GremlinGPT",
@@ -31,7 +31,7 @@
     "views": 37,
     "visitors": 15,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:52.441555"
+    "fetched": "2025-09-22T15:16:11.844202"
   },
   {
     "repo": "statik-server",
@@ -48,7 +48,7 @@
     "views": 2,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:53.385207"
+    "fetched": "2025-09-22T15:16:13.008719"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -62,10 +62,10 @@
     "updated_at": "2025-08-26T00:42:26Z",
     "clones": 7,
     "uniques": 3,
-    "views": 10,
+    "views": 19,
     "visitors": 4,
     "pulls_count": 1,
-    "fetched": "2025-09-22T14:55:54.296805"
+    "fetched": "2025-09-22T15:16:14.323943"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -82,7 +82,7 @@
     "views": 9,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:55.124717"
+    "fetched": "2025-09-22T15:16:15.501995"
   },
   {
     "repo": "dragon-boot",
@@ -96,10 +96,10 @@
     "updated_at": "2025-08-28T14:59:39Z",
     "clones": 0,
     "uniques": 0,
-    "views": 10,
-    "visitors": 7,
+    "views": 9,
+    "visitors": 6,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:56.006069"
+    "fetched": "2025-09-22T15:16:16.563727"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,7 +116,7 @@
     "views": 8,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:56.766312"
+    "fetched": "2025-09-22T15:16:17.675072"
   },
   {
     "repo": "GodCore",
@@ -133,7 +133,7 @@
     "views": 17,
     "visitors": 6,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:57.563914"
+    "fetched": "2025-09-22T15:16:18.837238"
   },
   {
     "repo": "AscendNet",
@@ -150,6 +150,6 @@
     "views": 8,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-09-22T14:55:58.395585"
+    "fetched": "2025-09-22T15:16:19.911913"
   }
 ]
