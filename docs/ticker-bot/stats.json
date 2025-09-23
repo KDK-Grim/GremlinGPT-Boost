@@ -14,7 +14,7 @@
     "views": 89,
     "visitors": 13,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:12.435783"
+    "fetched": "2025-09-23T22:04:26.739200"
   },
   {
     "repo": "GremlinGPT",
@@ -28,10 +28,10 @@
     "updated_at": "2025-09-22T18:49:44Z",
     "clones": 12,
     "uniques": 11,
-    "views": 40,
-    "visitors": 17,
+    "views": 39,
+    "visitors": 16,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:13.628156"
+    "fetched": "2025-09-23T22:04:27.961474"
   },
   {
     "repo": "statik-server",
@@ -48,7 +48,7 @@
     "views": 6,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:14.874502"
+    "fetched": "2025-09-23T22:04:29.200803"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -65,7 +65,7 @@
     "views": 23,
     "visitors": 4,
     "pulls_count": 1,
-    "fetched": "2025-09-23T21:55:16.150022"
+    "fetched": "2025-09-23T22:04:30.433309"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -82,7 +82,7 @@
     "views": 12,
     "visitors": 4,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:17.352146"
+    "fetched": "2025-09-23T22:04:31.660313"
   },
   {
     "repo": "dragon-boot",
@@ -96,10 +96,10 @@
     "updated_at": "2025-09-22T18:50:19Z",
     "clones": 0,
     "uniques": 0,
-    "views": 12,
-    "visitors": 7,
+    "views": 11,
+    "visitors": 6,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:18.507721"
+    "fetched": "2025-09-23T22:04:32.794083"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,7 +116,7 @@
     "views": 10,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:19.635485"
+    "fetched": "2025-09-23T22:04:33.932674"
   },
   {
     "repo": "GodCore",
@@ -133,7 +133,7 @@
     "views": 26,
     "visitors": 8,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:20.842994"
+    "fetched": "2025-09-23T22:04:35.084040"
   },
   {
     "repo": "AscendNet",
@@ -145,11 +145,11 @@
     "size_kb": 291973,
     "default_branch": "master",
     "updated_at": "2025-09-22T18:50:03Z",
-    "clones": 16,
-    "uniques": 8,
+    "clones": 15,
+    "uniques": 7,
     "views": 10,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-09-23T21:55:22.056944"
+    "fetched": "2025-09-23T22:04:36.540829"
   }
 ]
