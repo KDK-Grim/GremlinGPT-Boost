@@ -14,7 +14,7 @@
     "views": 40,
     "visitors": 7,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:18:59.693021"
+    "fetched": "2025-10-03T22:35:30.937074"
   },
   {
     "repo": "GremlinGPT",
@@ -31,7 +31,7 @@
     "views": 35,
     "visitors": 9,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:19:00.718823"
+    "fetched": "2025-10-03T22:35:31.615257"
   },
   {
     "repo": "statik-server",
@@ -48,7 +48,7 @@
     "views": 4,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:19:01.764216"
+    "fetched": "2025-10-03T22:35:32.353505"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -65,7 +65,7 @@
     "views": 15,
     "visitors": 3,
     "pulls_count": 1,
-    "fetched": "2025-10-03T22:19:02.811282"
+    "fetched": "2025-10-03T22:35:33.082580"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -82,7 +82,7 @@
     "views": 7,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:19:03.758914"
+    "fetched": "2025-10-03T22:35:33.714476"
   },
   {
     "repo": "dragon-boot",
@@ -99,7 +99,7 @@
     "views": 9,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:19:04.698334"
+    "fetched": "2025-10-03T22:35:34.356365"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,24 +116,24 @@
     "views": 3,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:19:05.708797"
+    "fetched": "2025-10-03T22:35:35.038733"
   },
   {
     "repo": "GodCore",
-    "stars": 4,
+    "stars": 3,
     "forks": 1,
     "watchers": 1,
     "open_issues": 0,
     "language": "Python",
     "size_kb": 26729,
     "default_branch": "master",
-    "updated_at": "2025-09-22T18:51:24Z",
+    "updated_at": "2025-10-03T22:35:21Z",
     "clones": 12,
     "uniques": 11,
     "views": 23,
     "visitors": 5,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:19:06.707388"
+    "fetched": "2025-10-03T22:35:35.703218"
   },
   {
     "repo": "AscendNet",
@@ -150,6 +150,6 @@
     "views": 2,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-03T22:19:07.713114"
+    "fetched": "2025-10-03T22:35:36.347666"
   }
 ]
