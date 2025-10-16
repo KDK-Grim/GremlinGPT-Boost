@@ -14,7 +14,7 @@
     "views": 36,
     "visitors": 5,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:11.016702"
+    "fetched": "2025-10-16T13:02:31.691549"
   },
   {
     "repo": "GremlinGPT",
@@ -31,7 +31,7 @@
     "views": 7,
     "visitors": 4,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:12.123611"
+    "fetched": "2025-10-16T13:02:32.431030"
   },
   {
     "repo": "statik-server",
@@ -43,12 +43,12 @@
     "size_kb": 354183,
     "default_branch": "master",
     "updated_at": "2025-09-22T18:50:53Z",
-    "clones": 16,
-    "uniques": 16,
+    "clones": 18,
+    "uniques": 18,
     "views": 1,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:13.483341"
+    "fetched": "2025-10-16T13:02:33.193782"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -60,12 +60,12 @@
     "size_kb": 343379,
     "default_branch": "master",
     "updated_at": "2025-09-22T18:51:08Z",
-    "clones": 5,
-    "uniques": 4,
+    "clones": 4,
+    "uniques": 3,
     "views": 2,
     "visitors": 2,
     "pulls_count": 1,
-    "fetched": "2025-10-16T11:58:14.836923"
+    "fetched": "2025-10-16T13:02:33.984430"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -82,7 +82,7 @@
     "views": 5,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:15.941912"
+    "fetched": "2025-10-16T13:02:34.737080"
   },
   {
     "repo": "dragon-boot",
@@ -99,7 +99,7 @@
     "views": 6,
     "visitors": 5,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:17.188129"
+    "fetched": "2025-10-16T13:02:35.503218"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,7 +116,7 @@
     "views": 0,
     "visitors": 0,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:18.288853"
+    "fetched": "2025-10-16T13:02:36.199132"
   },
   {
     "repo": "GodCore",
@@ -133,7 +133,7 @@
     "views": 0,
     "visitors": 0,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:19.518087"
+    "fetched": "2025-10-16T13:02:36.898183"
   },
   {
     "repo": "AscendNet",
@@ -145,11 +145,11 @@
     "size_kb": 291973,
     "default_branch": "master",
     "updated_at": "2025-10-03T22:35:53Z",
-    "clones": 16,
+    "clones": 15,
     "uniques": 8,
     "views": 2,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-16T11:58:20.622334"
+    "fetched": "2025-10-16T13:02:37.602423"
   }
 ]
