@@ -14,7 +14,7 @@
     "views": 36,
     "visitors": 5,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:50.527332"
+    "fetched": "2025-10-16T23:08:08.898000"
   },
   {
     "repo": "GremlinGPT",
@@ -28,10 +28,10 @@
     "updated_at": "2025-09-27T14:47:43Z",
     "clones": 5,
     "uniques": 5,
-    "views": 6,
+    "views": 5,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:51.043184"
+    "fetched": "2025-10-16T23:08:09.939413"
   },
   {
     "repo": "statik-server",
@@ -48,7 +48,7 @@
     "views": 1,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:51.618229"
+    "fetched": "2025-10-16T23:08:11.082259"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -65,7 +65,7 @@
     "views": 2,
     "visitors": 2,
     "pulls_count": 1,
-    "fetched": "2025-10-16T22:36:52.206518"
+    "fetched": "2025-10-16T23:08:12.325492"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -79,10 +79,10 @@
     "updated_at": "2025-09-22T18:51:54Z",
     "clones": 3,
     "uniques": 2,
-    "views": 5,
+    "views": 4,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:52.776487"
+    "fetched": "2025-10-16T23:08:13.298377"
   },
   {
     "repo": "dragon-boot",
@@ -99,7 +99,7 @@
     "views": 6,
     "visitors": 5,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:53.343393"
+    "fetched": "2025-10-16T23:08:14.269779"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,7 +116,7 @@
     "views": 0,
     "visitors": 0,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:53.880423"
+    "fetched": "2025-10-16T23:08:15.288596"
   },
   {
     "repo": "GodCore",
@@ -133,7 +133,7 @@
     "views": 0,
     "visitors": 0,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:54.446701"
+    "fetched": "2025-10-16T23:08:16.272732"
   },
   {
     "repo": "AscendNet",
@@ -150,6 +150,6 @@
     "views": 2,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-16T22:36:55.112352"
+    "fetched": "2025-10-16T23:08:17.290353"
   }
 ]
