@@ -14,7 +14,7 @@
     "views": 40,
     "visitors": 7,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:45.897593"
+    "fetched": "2025-10-24T19:00:45.906492"
   },
   {
     "repo": "GremlinGPT",
@@ -31,7 +31,7 @@
     "views": 6,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:46.431973"
+    "fetched": "2025-10-24T19:00:46.593661"
   },
   {
     "repo": "statik-server",
@@ -48,7 +48,7 @@
     "views": 2,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:47.017969"
+    "fetched": "2025-10-24T19:00:47.379326"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -65,7 +65,7 @@
     "views": 3,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:47.639862"
+    "fetched": "2025-10-24T19:00:48.098423"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -82,7 +82,7 @@
     "views": 2,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:48.163110"
+    "fetched": "2025-10-24T19:00:48.802377"
   },
   {
     "repo": "dragon-boot",
@@ -94,12 +94,12 @@
     "size_kb": 50651,
     "default_branch": "master",
     "updated_at": "2025-10-19T10:22:35Z",
-    "clones": 15,
-    "uniques": 13,
+    "clones": 14,
+    "uniques": 12,
     "views": 25,
     "visitors": 10,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:48.729621"
+    "fetched": "2025-10-24T19:00:49.488978"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,7 +116,7 @@
     "views": 1,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:49.284973"
+    "fetched": "2025-10-24T19:00:50.248755"
   },
   {
     "repo": "GodCore",
@@ -133,7 +133,7 @@
     "views": 2,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:49.788315"
+    "fetched": "2025-10-24T19:00:51.103257"
   },
   {
     "repo": "AscendNet",
@@ -150,6 +150,6 @@
     "views": 2,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-24T18:48:50.292109"
+    "fetched": "2025-10-24T19:00:51.784003"
   }
 ]
