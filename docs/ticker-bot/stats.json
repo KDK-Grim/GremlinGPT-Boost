@@ -11,10 +11,10 @@
     "updated_at": "2025-10-27T21:28:37Z",
     "clones": 30,
     "uniques": 19,
-    "views": 64,
-    "visitors": 7,
+    "views": 63,
+    "visitors": 6,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:17.310250"
+    "fetched": "2025-10-28T13:00:29.930828"
   },
   {
     "repo": "GremlinGPT",
@@ -26,12 +26,12 @@
     "size_kb": 80221,
     "default_branch": "master",
     "updated_at": "2025-09-27T14:47:43Z",
-    "clones": 16,
-    "uniques": 12,
+    "clones": 17,
+    "uniques": 13,
     "views": 11,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:18.342030"
+    "fetched": "2025-10-28T13:00:31.071236"
   },
   {
     "repo": "statik-server",
@@ -48,7 +48,7 @@
     "views": 3,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:19.374130"
+    "fetched": "2025-10-28T13:00:32.664533"
   },
   {
     "repo": "Gremlin-ShadTail-Trader",
@@ -65,7 +65,7 @@
     "views": 2,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:20.377033"
+    "fetched": "2025-10-28T13:00:33.869614"
   },
   {
     "repo": "Gremlin-MCP-Scrap",
@@ -82,7 +82,7 @@
     "views": 2,
     "visitors": 2,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:21.369001"
+    "fetched": "2025-10-28T13:00:35.090494"
   },
   {
     "repo": "dragon-boot",
@@ -99,7 +99,7 @@
     "views": 22,
     "visitors": 8,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:22.578404"
+    "fetched": "2025-10-28T13:00:36.260600"
   },
   {
     "repo": "AscendDocs-of-GovSeverance",
@@ -116,7 +116,7 @@
     "views": 1,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:23.540929"
+    "fetched": "2025-10-28T13:00:37.510100"
   },
   {
     "repo": "GodCore",
@@ -133,7 +133,7 @@
     "views": 8,
     "visitors": 3,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:24.568509"
+    "fetched": "2025-10-28T13:00:38.512074"
   },
   {
     "repo": "AscendNet",
@@ -145,11 +145,11 @@
     "size_kb": 291973,
     "default_branch": "master",
     "updated_at": "2025-10-03T22:35:53Z",
-    "clones": 15,
+    "clones": 14,
     "uniques": 9,
     "views": 2,
     "visitors": 1,
     "pulls_count": 0,
-    "fetched": "2025-10-28T12:07:25.601938"
+    "fetched": "2025-10-28T13:00:39.498843"
   }
 ]
